@@ -7,6 +7,7 @@ public class Usuario {
     public String nombre;
     public String apellido;
     private String telefono;
+    private String contrasenia;
     public Rol rol;
 
     public Usuario(String id, String nombre, String apellido, String telefono, Rol rol) {
