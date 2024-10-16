@@ -3,6 +3,7 @@ package menu;
 import cartelera.Pelicula;
 import cine.Cine;
 import usuarios.administrador.Administrador;
+import usuarios.cliente.Cliente;
 import utils.EstadoPelicula;
 
 import java.time.LocalTime;
@@ -19,10 +20,14 @@ public class Menu {
         while (respuesta != 12) {
             System.out.println("Buen dia " + admin.nombre + "-" + admin.apellido);
             System.out.println("""
-                    1.- Registrar una pelicula
-                    2.- 
-                  
-                    12.- Salir""");
+                    1.-Registrar una pelicula
+                    2.-Eliminar una pelicula
+                    3.-Actualizar una pelicula
+                    4.-Dulceria
+                    5.-Registrar empleado
+                    6.-
+                    
+                    12.-Salir""");
             System.out.print("Elija una opción: ");
             respuesta = scanner.nextInt();
 
@@ -49,7 +54,7 @@ public class Menu {
                     int estado = scanner.nextInt();
                     scanner.nextLine();
                     Pelicula pelicula = null;
-                    switch (estado){
+                    switch (estado) {
                         case 1:
                             pelicula = new Pelicula(id, titulo, duracion, genero, clasificacion, sinopsis, EstadoPelicula.ACTUAL);
                             break;
@@ -76,7 +81,7 @@ public class Menu {
                         if (!r.toLowerCase().equals("s")) {
                             band = false;
                         }
-                    }while(band);
+                    } while (band);
 
                     cine.registrarPelicula(pelicula);
                     System.out.println("Registro Exitoso");
@@ -89,6 +94,19 @@ public class Menu {
             }
         }
         scanner.close();
+
     }
 
+    public void mostrarMenuCliente(Cliente cliente) {
+        int respuesta = 0;
+
+        while (respuesta != 12) {
+            System.out.println("Buen dia " + cliente.nombre);
+            System.out.println("""
+                    1.-Mostrar cartelera
+                    2.-Mostrar dulceria
+                    3.-Elegir pelicula
+                    4.-""");
+        }
+    }
 }
