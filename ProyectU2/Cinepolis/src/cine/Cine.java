@@ -31,4 +31,22 @@ public class Cine {
     public Cine() {
     }
 
+    //------------- Métodos de Agregación -----------------
+    public void registrarPelicula(Pelicula pelicula) {
+        this.listaPeliculas.add(pelicula);
+        cartelera.listaPeliculas.add(pelicula);
+
+    }
+    public void registrarHorarioPelicula() {
+
+    }
+
+    //--------------Métodos para generar id´s------------
+    public String generarIdPelicula() {
+        // p - {longitud usuarios.pacientes +1} - {1-100000}
+        int longitudPacientesMasUno =  this.listaPeliculas.size() + 1;
+        int numeroAleatorio = random.nextInt(1,100000);
+
+        return String.format("P-%d-%d", longitudPacientesMasUno, numeroAleatorio);
+    }
 }
