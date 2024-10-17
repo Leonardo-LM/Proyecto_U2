@@ -57,11 +57,13 @@ public class Cine {
 
         if (peliculaEncontrada.isPresent()) {
             System.out.println("--Actualice los datos--");
+            System.out.println("Titulo actual: " + peliculaEncontrada.get().getTitulo());
             System.out.println("Nuevo Titulo: ");
             String nuevoTitulo = scanner.nextLine();
 
             int duracion=0;
             boolean bandDuracion = false;
+            System.out.println("Duracion actual: " + peliculaEncontrada.get().getDuracion());
             do {
                 // Posible expansion de condición para los horarios >:(
                 System.out.println("Nueva Duración (en minutos): ");
@@ -76,17 +78,21 @@ public class Cine {
             }while (!bandDuracion);
 
             scanner.nextLine();
+            System.out.println("Género actual: " + peliculaEncontrada.get().getGenero());
             System.out.println("Nuevo Género: ");
             String genero = scanner.nextLine();
 
+            System.out.println("Clasificación actual: " + peliculaEncontrada.get().getClasificacion());
             System.out.println("Nueva Clasificación: ");
             String clasificacion = scanner.nextLine();
 
+            System.out.println("Sinopsis Actual: " + peliculaEncontrada.get().getSinopsis());
             System.out.println("Nueva Sinopsis: ");
             String sinopsis = scanner.nextLine();
 
             boolean bandEstado = false;
             int seleccion;
+            System.out.println("Estado de pelicula actual: " + peliculaEncontrada.get().getEstado());
             while (!bandEstado) {
             System.out.print("Nuevo Estado de la pelicula:" +
                     "\n1. Estado Actual " +
