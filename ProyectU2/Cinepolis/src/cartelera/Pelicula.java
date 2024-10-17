@@ -3,9 +3,6 @@ package cartelera;
 import utils.EstadoPelicula;
 import cine.Cine;
 
-import java.time.LocalTime;
-import java.util.ArrayList;
-
 public class Pelicula {
     public String id;
     public String titulo;
@@ -14,7 +11,6 @@ public class Pelicula {
     public String clasificacion;
     public String sinopsis;
     public EstadoPelicula estado;
-    public ArrayList<LocalTime> Horario;
 
     Cine cine = new Cine();
 
@@ -27,7 +23,6 @@ public class Pelicula {
         this.clasificacion = clasificacion;
         this.sinopsis = sinopsis;
         this.estado = estado;
-        this.Horario = new ArrayList<>();
     }
 
     public void mostrarDatosp(){
@@ -39,12 +34,6 @@ public class Pelicula {
         System.out.println("Clasificacion: " + this.clasificacion);
         System.out.println("Sinopsis: " + this.sinopsis);
         System.out.println("Estado: " + this.estado);
-        System.out.println("Horario: " + this.Horario);
-
-    }
-
-    public void agregarFuncion(LocalTime funcion) {
-        Horario.add(funcion);
     }
 
     //-------------Getters y Setters--------------
@@ -102,14 +91,6 @@ public class Pelicula {
 
     public void setSinopsis(String sinopsis) {
         this.sinopsis = sinopsis;
-    }
-
-    public ArrayList<LocalTime> getHorario() {
-        return Horario;
-    }
-
-    public void setHorario(ArrayList<LocalTime> horario) {
-        Horario = horario;
     }
 
 }

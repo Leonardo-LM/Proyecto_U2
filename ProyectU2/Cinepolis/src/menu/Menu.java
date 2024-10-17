@@ -2,11 +2,10 @@ package menu;
 
 import cartelera.Pelicula;
 import cine.Cine;
+import salas.Sala;
 import usuarios.administrador.Administrador;
 import usuarios.cliente.Cliente;
-import utils.EstadoPelicula;
 
-import java.time.LocalTime;
 import java.util.Scanner;
 
 public class Menu {
@@ -26,6 +25,7 @@ public class Menu {
                     4.-Dulceria
                     5.-Registrar empleado
                     6.-
+                    8.-Asignar pelicula a sala
                     
                     12.-Salir""");
             System.out.print("Elija una opción: ");
@@ -37,18 +37,14 @@ public class Menu {
                     break;
                 case 2:
                     System.out.println("---Eliminar una pelicula---");
-                    for (Pelicula pelicula1 : cine.listaPeliculas){
-                        System.out.println("Titulo: "+pelicula1.titulo + "Id: " + pelicula1.id);
-                    };
+                    this.mostrarPeliculasConId();
                     System.out.println("Ingrese el id de la pelicula que desea eliminar: ");
                     String idPeliculaE = scanner.nextLine();
                     cine.eliminarPelicula(idPeliculaE);
                     break;
                 case 3:
                     System.out.println("---Actualizar una pelicula---");
-                    for (Pelicula pelicula1 : cine.listaPeliculas){
-                        System.out.println("Titulo: "+pelicula1.titulo + "Id: " + pelicula1.id);
-                    };
+                    this.mostrarPeliculasConId();
                     System.out.println("Ingrese el id de la pelicula que desea actualizar: ");
                     String idPeliculaA = scanner.nextLine();
                     cine.actualizarDatosPelicula(idPeliculaA);
@@ -60,7 +56,13 @@ public class Menu {
                     System.out.println("---Registrar empleado---");
                     break;
                 case 6:
-                    System.out.println("---Dulceria---");
+                    break;
+                case 8:
+                    System.out.println("---Asignar pelicula a sala---");
+                    this.mostrarPeliculasConId();
+                    for (Sala sala : cine.listaSalas){
+                        System.out.println();
+                    }
                     break;
                 case 12:
                     System.out.println("\n-----Adiosito-----\n");
@@ -81,6 +83,11 @@ public class Menu {
                     2.-Mostrar dulceria
                     3.-Elegir pelicula
                     4.-""");
+        }
+    }
+    public void mostrarPeliculasConId(){
+        for (Pelicula pelicula : cine.listaPeliculas){
+            System.out.println("Titulo: "+pelicula.titulo + "Id: " + pelicula.id);
         }
     }
 }
