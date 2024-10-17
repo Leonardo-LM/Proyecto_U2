@@ -17,6 +17,19 @@ public class Cliente extends Usuario {
         this.CURP = CURP;
     }
 
+    // Método para mostrar información del cliente
+
+    public String informacionCliente() {
+        return "Cliente{" +
+                "id='" + id + '\'' +
+                ", nombre='" + nombre + '\'' +
+                ", apellidos='" + apellido + '\'' +
+                ", curp='" + CURP + '\'' +
+                ", fechaNacimiento='" + fechaNacimiento + '\'' +
+                ", direccion='" + correoE + '\'' +
+                '}';
+    }
+
     //-------------Getters y Setters-------------
     public String getCorreoE() {
         return correoE;

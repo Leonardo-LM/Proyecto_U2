@@ -1,28 +1,82 @@
 package Salas;
 
 import cartelera.Pelicula;
+import utils.EstadoAsiento;
+import utils.TipoAsiento;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.time.LocalDateTime;
 
 public class sala {
     public String Id; // num. sala (A, B...)
     public int capacidad; // num. asientos
-    public int filas; // 1, 2, 3...
-    public int columnas; /// a, b, c....
-    public int asientosVip;
-    public int asientosPremium;
+    private List<asiento> asientos;
     public LocalDateTime horarios;
     public Pelicula peliculas;
 
-    public sala(String id, int capacidad, int filas, int columnas, int asientosVip, int asientosPremium, LocalDateTime horarios, Pelicula peliculas) {
+    public sala(String id, int filas, int columnas, LocalDateTime horarios, Pelicula peliculas, int cantidadVIP, int cantidadPremium) {
         this.Id = id;
-        this.capacidad = capacidad;
-        this.filas = filas;
-        this.columnas = columnas;
-        this.asientosVip = asientosVip;
-        this.asientosPremium = asientosPremium;
+        this.capacidad = filas * columnas;
+        this.asientos = new ArrayList<>();
         this.horarios = horarios;
         this.peliculas = peliculas;
+
+        // Crear distribucion de asientos
+
+        int totalAsientos = filas * columnas;
+        for (int i = 0; i < totalAsientos; i++) {
+            if (i < cantidadVIP) {
+                asientos.add(new asiento(TipoAsiento.VIP));
+            } else if (i < cantidadVIP + cantidadPremium) {
+                asientos.add(new asiento(TipoAsiento.PREMIUM));
+            } else {
+                asientos.add(new asiento(TipoAsiento.NORMAL));
+            }
+        }
+    }
+
+    // Metodo para reservar un asiento
+
+    public boolean reservarAsiento(int indice) {
+        if (indice >= 0 && indice < asientos.size()) {
+            asiento asiento = asientos.get(indice);
+            if (asiento.getEstado() == EstadoAsiento.DISPONIBLE) {
+                asiento.setEstado(EstadoAsiento.RESERVADO);
+                return true;
+            }
+        }
+        return false;
+
+    }
+
+    // Metodo para vender un asiento
+
+    public boolean venderAsiento(int indice) {
+        if (indice >= 0 && indice < asientos.size()) {
+            asiento asiento = asientos.get(indice);
+            if (asiento.getEstado() == EstadoAsiento.RESERVADO) {
+                asiento.setEstado(EstadoAsiento.VENDIDO);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    //Mostrar estado de los asientos
+
+    public List<asiento> getAsientos() {
+        return asientos;
+    }
+
+    // Mostrar datos
+
+    public String mostrarDatos() {
+        return "Sala{" +
+                "numeroSala=" + Id +
+                ", capacidad=" + capacidad +
+                ", asientos=" + asientos +
+                '}';
     }
 
     public String getId() {
@@ -39,38 +93,6 @@ public class sala {
 
     public void setCapacidad(int capacidad) {
         this.capacidad = capacidad;
-    }
-
-    public int getFilas() {
-        return filas;
-    }
-
-    public void setFilas(int filas) {
-        this.filas = filas;
-    }
-
-    public int getColumnas() {
-        return columnas;
-    }
-
-    public void setColumnas(int columnas) {
-        this.columnas = columnas;
-    }
-
-    public int getAsientosVip() {
-        return asientosVip;
-    }
-
-    public void setAsientosVip(int asientosVip) {
-        this.asientosVip = asientosVip;
-    }
-
-    public int getAsientosPremium() {
-        return asientosPremium;
-    }
-
-    public void setAsientosPremium(int asientosPremium) {
-        this.asientosPremium = asientosPremium;
     }
 
     public LocalDateTime getHorarios() {

@@ -1,16 +1,17 @@
 package utils;
 
 public enum TipoAsiento {
-    VIP(200),
-    PREMIUM(400);
-    private int costo;
+    NORMAL(100.0),
+    VIP(200.0),
+    PREMIUM(400.0);
+    private Double costo;
 
-    TipoAsiento(int costo) {
+    TipoAsiento(Double costo) {
         this.costo = costo;
     }
 
     //--------------Getters y Setters-------------
-    public int getCosto() {
+    public Double getCosto() {
         return costo;
     }
 

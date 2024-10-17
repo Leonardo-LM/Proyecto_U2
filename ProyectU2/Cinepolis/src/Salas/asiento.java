@@ -7,34 +7,53 @@ public class asiento {
     public String Id; //// fila y columna
     public TipoAsiento tipo; // normal o premium
     public EstadoAsiento estado; // libre, ocupado, reservado
+    public Double precio;
 
-    public asiento(String id, TipoAsiento tipo, EstadoAsiento estado) {
-        this.Id = id;
+    public asiento(TipoAsiento tipo) {
         this.tipo = tipo;
-        this.estado = estado;
+        this.estado = EstadoAsiento.DISPONIBLE;
+        this.precio = calcularPrecio(tipo);
+    }
+
+    private Double calcularPrecio(TipoAsiento tipo) {
+        switch (tipo) {
+            case PREMIUM:
+                return TipoAsiento.PREMIUM.getCosto();
+            case VIP:
+                return TipoAsiento.VIP.getCosto();
+            default:
+                return 100.0;
+        }
+
+    }
+
+    public Double getPrecio() {
+        return precio;
     }
 
     public String getId() {
         return Id;
     }
 
-    public void setId(String id) {
-        Id = id;
-    }
-
     public TipoAsiento getTipo() {
         return tipo;
-    }
-
-    public void setTipo(TipoAsiento tipo) {
-        this.tipo = tipo;
     }
 
     public EstadoAsiento getEstado() {
         return estado;
     }
 
-    public void setEstado(EstadoAsiento estado) {
-        this.estado = estado;
+    public EstadoAsiento setEstado(EstadoAsiento estado) {
+        return estado;
     }
+
+    public String mostrarEstado() {
+        return "Asiento{" +
+                "estado=" + estado +
+                ", tipo=" + tipo +
+                ", precio=" + precio +
+                '}';
+    }
+
+
 }
