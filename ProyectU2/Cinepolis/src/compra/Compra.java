@@ -1,20 +1,20 @@
-package Compra;
+package compra;
 
 import cartelera.Pelicula;
 import usuarios.cliente.Cliente;
-import Salas.sala;
+import salas.Sala;
 
 import java.time.LocalDateTime;
 
-public class compra {
+public class Compra {
     public String Id;
     public Cliente cliente;
     public Pelicula pelicula;
     public LocalDateTime fecha;
-    public sala sala;
+    public Sala sala;
     public String metodoPago;
 
-    public compra(String id, Cliente cliente, Pelicula pelicula, LocalDateTime fecha, Salas.sala sala, String metodoPago) {
+    public Compra(String id, Cliente cliente, Pelicula pelicula, LocalDateTime fecha, Sala sala, String metodoPago) {
         Id = id;
         this.cliente = cliente;
         this.pelicula = pelicula;
@@ -55,11 +55,11 @@ public class compra {
         this.fecha = fecha;
     }
 
-    public Salas.sala getSala() {
+    public Sala getSala() {
         return sala;
     }
 
-    public void setSala(Salas.sala sala) {
+    public void setSala(Sala sala) {
         this.sala = sala;
     }
 

@@ -187,6 +187,7 @@ public class Cine {
                 if (pelicula.getId().equals(idPelicula)) {
                     this.listaPeliculas.remove(pelicula);
                     cartelera.listaPeliculas.remove(pelicula);
+
                     return;
                 }
             }

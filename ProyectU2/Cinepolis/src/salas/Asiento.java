@@ -1,15 +1,15 @@
-package Salas;
+package salas;
 
 import utils.EstadoAsiento;
 import utils.TipoAsiento;
 
-public class asiento {
+public class Asiento {
     public String Id; //// fila y columna
     public TipoAsiento tipo; // normal, VIP o premium
     public EstadoAsiento estado; // libre, ocupado, reservado
     public Double precio;
 
-    public asiento(TipoAsiento tipo) {
+    public Asiento(TipoAsiento tipo) {
         this.tipo = tipo;
         this.estado = EstadoAsiento.DISPONIBLE;
         this.precio = calcularPrecio(tipo);
