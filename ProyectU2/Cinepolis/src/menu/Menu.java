@@ -87,6 +87,25 @@ public class Menu {
                     System.out.println("Registro Exitoso");
                     break;
                 case 2:
+                    System.out.println("---Eliminar una pelicula---");
+                    break;
+                case 3:
+                    System.out.println("---Actualizar una pelicula---");
+                    for (Pelicula pelicula1 : cine.listaPeliculas){
+                        System.out.println("Titulo: "+pelicula1.titulo + "Id: " + pelicula1.id);
+                    };
+                    System.out.println("Ingrese el id de la pelicula que desea actualizar: ");
+                    String idPelicula = scanner.nextLine();
+                    cine.actualizarDatosPelicula(idPelicula);
+                    break;
+                case 4:
+                    System.out.println("---Dulceria---");
+                    break;
+                case 5:
+                    System.out.println("---Registrar empleado---");
+                    break;
+                case 6:
+                    System.out.println("---Dulceria---");
                     break;
                 case 12:
                     System.out.println("\n-----Adiosito-----\n");

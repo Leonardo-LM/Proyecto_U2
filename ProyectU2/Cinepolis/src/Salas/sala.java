@@ -13,14 +13,14 @@ public class sala {
     public int capacidad; // num. asientos
     private List<asiento> asientos;
     public LocalDateTime horarios;
-    public Pelicula peliculas;
+    public ArrayList<Pelicula> peliculas;
 
     public sala(String id, int filas, int columnas, LocalDateTime horarios, Pelicula peliculas, int cantidadVIP, int cantidadPremium) {
         this.Id = id;
         this.capacidad = filas * columnas;
         this.asientos = new ArrayList<>();
         this.horarios = horarios;
-        this.peliculas = peliculas;
+        this.peliculas = new ArrayList<>();
 
         // Crear distribucion de asientos
 
@@ -103,11 +103,4 @@ public class sala {
         this.horarios = horarios;
     }
 
-    public Pelicula getPeliculas() {
-        return peliculas;
-    }
-
-    public void setPeliculas(Pelicula peliculas) {
-        this.peliculas = peliculas;
-    }
 }

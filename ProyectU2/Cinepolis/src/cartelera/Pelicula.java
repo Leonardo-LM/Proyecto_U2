@@ -96,4 +96,5 @@ public class Pelicula {
     public void setHorario(ArrayList<LocalTime> horario) {
         Horario = horario;
     }
+
 }

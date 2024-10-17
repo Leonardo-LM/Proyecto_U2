@@ -5,7 +5,7 @@ import utils.TipoAsiento;
 
 public class asiento {
     public String Id; //// fila y columna
-    public TipoAsiento tipo; // normal o premium
+    public TipoAsiento tipo; // normal, VIP o premium
     public EstadoAsiento estado; // libre, ocupado, reservado
     public Double precio;
 
