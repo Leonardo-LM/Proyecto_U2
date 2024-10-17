@@ -44,9 +44,9 @@ public class Cine {
     //--------------Métodos para generar id´s------------
     public String generarIdPelicula() {
         // p - {longitud usuarios.pacientes +1} - {1-100000}
-        int longitudPacientesMasUno =  this.listaPeliculas.size() + 1;
+        int longitudPeliculaMasUno =  this.listaPeliculas.size() + 1;
         int numeroAleatorio = random.nextInt(1,100000);
 
-        return String.format("P-%d-%d", longitudPacientesMasUno, numeroAleatorio);
+        return String.format("P-%d-%d", longitudPeliculaMasUno, numeroAleatorio);
     }
 }
