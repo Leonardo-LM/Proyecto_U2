@@ -37,9 +37,6 @@ public class Cine {
         cartelera.listaPeliculas.add(pelicula);
 
     }
-    public void registrarHorarioPelicula() {
-
-    }
 
     //--------------Métodos para generar id´s------------
     public String generarIdPelicula() {
