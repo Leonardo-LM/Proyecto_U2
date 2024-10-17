@@ -1,4 +1,4 @@
-package Salas;
+package salas;
 
 import cartelera.Pelicula;
 import utils.EstadoAsiento;
@@ -8,17 +8,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.time.LocalDateTime;
 
-public class sala {
+public class Sala {
     public String Id; // num. sala (A, B...)
     public int capacidad; // num. asientos
-    private List<asiento> asientos;
+    private List<Asiento> Asientos;
     public LocalDateTime horarios;
     public ArrayList<Pelicula> peliculas;
 
-    public sala(String id, int filas, int columnas, LocalDateTime horarios, Pelicula peliculas, int cantidadVIP, int cantidadPremium) {
+    public Sala(String id, int filas, int columnas, LocalDateTime horarios, Pelicula peliculas, int cantidadVIP, int cantidadPremium) {
         this.Id = id;
         this.capacidad = filas * columnas;
-        this.asientos = new ArrayList<>();
+        this.Asientos = new ArrayList<>();
         this.horarios = horarios;
         this.peliculas = new ArrayList<>();
 
@@ -27,11 +27,11 @@ public class sala {
         int totalAsientos = filas * columnas;
         for (int i = 0; i < totalAsientos; i++) {
             if (i < cantidadVIP) {
-                asientos.add(new asiento(TipoAsiento.VIP));
+                Asientos.add(new Asiento(TipoAsiento.VIP));
             } else if (i < cantidadVIP + cantidadPremium) {
-                asientos.add(new asiento(TipoAsiento.PREMIUM));
+                Asientos.add(new Asiento(TipoAsiento.PREMIUM));
             } else {
-                asientos.add(new asiento(TipoAsiento.NORMAL));
+                Asientos.add(new Asiento(TipoAsiento.NORMAL));
             }
         }
     }
@@ -39,8 +39,8 @@ public class sala {
     // Metodo para reservar un asiento
 
     public boolean reservarAsiento(int indice) {
-        if (indice >= 0 && indice < asientos.size()) {
-            asiento asiento = asientos.get(indice);
+        if (indice >= 0 && indice < Asientos.size()) {
+            Asiento asiento = Asientos.get(indice);
             if (asiento.getEstado() == EstadoAsiento.DISPONIBLE) {
                 asiento.setEstado(EstadoAsiento.RESERVADO);
                 return true;
@@ -53,8 +53,8 @@ public class sala {
     // Metodo para vender un asiento
 
     public boolean venderAsiento(int indice) {
-        if (indice >= 0 && indice < asientos.size()) {
-            asiento asiento = asientos.get(indice);
+        if (indice >= 0 && indice < Asientos.size()) {
+            Asiento asiento = Asientos.get(indice);
             if (asiento.getEstado() == EstadoAsiento.RESERVADO) {
                 asiento.setEstado(EstadoAsiento.VENDIDO);
                 return true;
@@ -65,8 +65,8 @@ public class sala {
 
     //Mostrar estado de los asientos
 
-    public List<asiento> getAsientos() {
-        return asientos;
+    public List<Asiento> getAsientos() {
+        return Asientos;
     }
 
     // Mostrar datos
@@ -75,7 +75,7 @@ public class sala {
         return "Sala{" +
                 "numeroSala=" + Id +
                 ", capacidad=" + capacidad +
-                ", asientos=" + asientos +
+                ", asientos=" + Asientos +
                 '}';
     }
 

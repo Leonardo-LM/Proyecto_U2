@@ -9,6 +9,7 @@ import utils.EstadoPelicula;
 import utils.Rol;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.*;
 
 public class Cine {
@@ -50,7 +51,62 @@ public class Cine {
 
         return String.format("P-%d-%d", longitudPeliculaMasUno, numeroAleatorio);
     }
-    //------------Métodos para actualizar datos----------------
+    //------------Métodos para C.R.U.D----------------
+
+    public void registrarPelicula(){
+        System.out.println("Registro de una pelicula");
+        String id = this.generarIdPelicula();
+        System.out.print("Ingrese el titulo: ");
+        String titulo = scanner.nextLine();
+        System.out.print("Ingrese la duración: ");
+        int duracion = scanner.nextInt();
+        scanner.nextLine();
+        System.out.print("Ingrese el genero: ");
+        String genero = scanner.nextLine();
+        System.out.print("Ingrese la clasificación: ");
+        String clasificacion = scanner.nextLine();
+        System.out.print("Ingrese la sinopsis: ");
+        String sinopsis = scanner.nextLine();
+
+        System.out.print("Seleccione el estado de la pelicula:" +
+                "\n1. Estado Actual " +
+                "2. Estado Proximamente");
+        System.out.print("Selección: ");
+        int estado = scanner.nextInt();
+        scanner.nextLine();
+        Pelicula pelicula = null;
+        switch (estado) {
+            case 1:
+                pelicula = new Pelicula(id, titulo, duracion, genero, clasificacion, sinopsis, EstadoPelicula.ACTUAL);
+                break;
+            case 2:
+                pelicula = new Pelicula(id, titulo, duracion, genero, clasificacion, sinopsis, EstadoPelicula.PROXIMAMENTE);
+                break;
+        }
+
+        boolean band = true;
+        LocalTime funcion = null;
+        do {
+            System.out.println("Ingrese la hora y los minutos de una función: ");
+            System.out.print("Ingrese la hora: ");
+            int hora = scanner.nextInt();
+            System.out.print("Ingrese los minutos: ");
+            int minutos = scanner.nextInt();
+            scanner.nextLine();
+
+            funcion = LocalTime.of(hora, minutos);
+            pelicula.agregarFuncion(funcion);
+
+            System.out.print("¿Desea Agregar otra función? S/N");
+            String r = scanner.nextLine().charAt(0) + "";
+            if (!r.toLowerCase().equals("s")) {
+                band = false;
+            }
+        } while (band);
+
+        this.registrarPelicula(pelicula);
+        System.out.println("Registro Exitoso");
+    }
     public void actualizarDatosPelicula(String idPelicula) {
         Optional<Pelicula> peliculaEncontrada = this.listaPeliculas.stream().filter(
                 pelicula -> pelicula.getId().equals(idPelicula)).findFirst();
@@ -124,5 +180,16 @@ public class Cine {
         }else{
             System.out.println("\nPelicula no encontrada");
         }
+    }
+
+    public void eliminarPelicula(String idPelicula) {
+            for (Pelicula pelicula : this.listaPeliculas) {
+                if (pelicula.getId().equals(idPelicula)) {
+                    this.listaPeliculas.remove(pelicula);
+                    cartelera.listaPeliculas.remove(pelicula);
+
+                    return;
+                }
+            }
     }
 }
