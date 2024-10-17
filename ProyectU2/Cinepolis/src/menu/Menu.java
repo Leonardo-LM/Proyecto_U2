@@ -33,61 +33,16 @@ public class Menu {
 
             switch (respuesta) {
                 case 1:
-                    System.out.println("Registro de una pelicula");
-                    String id = cine.generarIdPelicula();
-                    System.out.print("Ingrese el titulo: ");
-                    String titulo = scanner.nextLine();
-                    System.out.print("Ingrese la duración: ");
-                    int duracion = scanner.nextInt();
-                    scanner.nextLine();
-                    System.out.print("Ingrese el genero: ");
-                    String genero = scanner.nextLine();
-                    System.out.print("Ingrese la clasificación: ");
-                    String clasificacion = scanner.nextLine();
-                    System.out.print("Ingrese la sinopsis: ");
-                    String sinopsis = scanner.nextLine();
-
-                    System.out.print("Seleccione el estado de la pelicula:" +
-                            "\n1. Estado Actual " +
-                            "2. Estado Proximamente");
-                    System.out.print("Selección: ");
-                    int estado = scanner.nextInt();
-                    scanner.nextLine();
-                    Pelicula pelicula = null;
-                    switch (estado) {
-                        case 1:
-                            pelicula = new Pelicula(id, titulo, duracion, genero, clasificacion, sinopsis, EstadoPelicula.ACTUAL);
-                            break;
-                        case 2:
-                            pelicula = new Pelicula(id, titulo, duracion, genero, clasificacion, sinopsis, EstadoPelicula.PROXIMAMENTE);
-                            break;
-                    }
-
-                    boolean band = true;
-                    LocalTime funcion = null;
-                    do {
-                        System.out.println("Ingrese la hora y los minutos de una función: ");
-                        System.out.print("Ingrese la hora: ");
-                        int hora = scanner.nextInt();
-                        System.out.print("Ingrese los minutos: ");
-                        int minutos = scanner.nextInt();
-                        scanner.nextLine();
-
-                        funcion = LocalTime.of(hora, minutos);
-                        pelicula.agregarFuncion(funcion);
-
-                        System.out.print("¿Desea Agregar otra función? S/N");
-                        String r = scanner.nextLine().charAt(0) + "";
-                        if (!r.toLowerCase().equals("s")) {
-                            band = false;
-                        }
-                    } while (band);
-
-                    cine.registrarPelicula(pelicula);
-                    System.out.println("Registro Exitoso");
+                    cine.registrarPelicula();
                     break;
                 case 2:
                     System.out.println("---Eliminar una pelicula---");
+                    for (Pelicula pelicula1 : cine.listaPeliculas){
+                        System.out.println("Titulo: "+pelicula1.titulo + "Id: " + pelicula1.id);
+                    };
+                    System.out.println("Ingrese el id de la pelicula que desea eliminar: ");
+                    String idPeliculaE = scanner.nextLine();
+                    cine.eliminarPelicula(idPeliculaE);
                     break;
                 case 3:
                     System.out.println("---Actualizar una pelicula---");
@@ -95,8 +50,8 @@ public class Menu {
                         System.out.println("Titulo: "+pelicula1.titulo + "Id: " + pelicula1.id);
                     };
                     System.out.println("Ingrese el id de la pelicula que desea actualizar: ");
-                    String idPelicula = scanner.nextLine();
-                    cine.actualizarDatosPelicula(idPelicula);
+                    String idPeliculaA = scanner.nextLine();
+                    cine.actualizarDatosPelicula(idPeliculaA);
                     break;
                 case 4:
                     System.out.println("---Dulceria---");
