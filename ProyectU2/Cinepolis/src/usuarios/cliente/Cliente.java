@@ -31,22 +31,19 @@ public class Cliente extends Usuario {
     }
 
     //-------------Getters y Setters-------------
+
     public String getCorreoE() {
         return correoE;
     }
-
     public void setCorreoE(String correoE) {
         this.correoE = correoE;
     }
-
     public String getCURP() {
         return CURP;
     }
-
     public LocalDate getFechaNacimiento() {
         return fechaNacimiento;
     }
-
     public void setFechaNacimiento(LocalDate fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
     }

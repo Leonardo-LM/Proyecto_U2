@@ -15,7 +15,7 @@ public class Sala {
     public LocalDateTime horarios;
     public ArrayList<Pelicula> peliculas;
 
-    public Sala(String id, int filas, int columnas, LocalDateTime horarios, Pelicula peliculas, int cantidadVIP, int cantidadPremium) {
+    public Sala(String id, int filas, int columnas, LocalDateTime horarios, int cantidadVIP, int cantidadPremium) {
         this.Id = id;
         this.capacidad = filas * columnas;
         this.Asientos = new ArrayList<>();
@@ -36,6 +36,10 @@ public class Sala {
         }
     }
 
+    public void asignarPeliculaASala(Pelicula p) {
+        peliculas.add(p);
+    }
+
     // Metodo para reservar un asiento
 
     public boolean reservarAsiento(int indice) {
@@ -47,7 +51,6 @@ public class Sala {
             }
         }
         return false;
-
     }
 
     // Metodo para vender un asiento
@@ -79,28 +82,23 @@ public class Sala {
                 '}';
     }
 
+    //-----------Getters y Setters------------
     public String getId() {
         return Id;
     }
-
     public void setId(String id) {
         Id = id;
     }
-
     public int getCapacidad() {
         return capacidad;
     }
-
     public void setCapacidad(int capacidad) {
         this.capacidad = capacidad;
     }
-
     public LocalDateTime getHorarios() {
         return horarios;
     }
-
     public void setHorarios(LocalDateTime horarios) {
         this.horarios = horarios;
     }
-
 }
