@@ -1,5 +1,6 @@
 package menu;
 
+import java.time.LocalDate;
 import java.util.InputMismatchException;
 
 import cartelera.Pelicula;
@@ -25,7 +26,7 @@ public class Menu {
         int intesntosMax = 5, intentosUsuario=0;
 
         while(intentosUsuario<intesntosMax){
-            System.out.println("** BIENVENIDOS A CINEPOLIS ** \n Ingrese sesión para continuar ");
+            System.out.println("** BIENVENIDOS A CINEPOLIS ** \n Innicie sesión para continuar ");
             System.out.println("Ingresa tu usuario: ");
             String usuario = scanner.nextLine();
 
@@ -66,43 +67,81 @@ public class Menu {
         while (respuesta != 12) {
             System.out.println("Buen dia " + admin.nombre + "-" + admin.apellido);
             System.out.println("""
-                    1.-Registrar una pelicula
-                    2.-Eliminar una pelicula
-                    3.-Actualizar una pelicula
-                    4.-Mostrar dulceria
+                    1.- Registrar un cliente
+                    2.-Registrar una pelicula
+                    3.-Eliminar una pelicula
+                    4.-Actualizar una pelicula
+                    5.-Mostrar dulceria
                     5.-Registrar empleado
-                    6.-Agregar producto a dulceria
-                    7.-Eliminar producto de dulceria
-                    8.-Asignar pelicula a sala
+                    7.-Agregar producto a dulceria
+                    8.-Eliminar producto de dulceria
+                    9.-Asignar pelicula a sala
                     12.-Salir""");
             System.out.print("Elija una opción: ");
             respuesta = scanner.nextInt();
 
             switch (respuesta) {
                 case 1:
+                    String idCliente = cine.generarIdCliente();
+
+                    System.out.println("---Registrar cliente---");
+
+                    System.out.println("Ingresa el nombre del cliente: ");
+                    String nombre = scanner.nextLine();
+
+                    System.out.println("Ingresa el apellido del cliente: ");
+                    String apellido = scanner.nextLine();
+
+                    System.out.println("Ingresa el numero de telefono: ");
+                    String telefono = scanner.nextLine();
+
+                    System.out.println("Ingrese la contraseña: ");
+                    String contraseña = scanner.nextLine();
+
+                    System.out.println("Ingresa la fehca de nacimiento del cliente:");
+                    System.out.println("ingresa el año: ");
+                    int añoNacimiento = scanner.nextInt();
+                    System.out.println("Ingresa el mes: ");
+                    int mesNacimiento = scanner.nextInt();
+                    System.out.println("Ingresa el día: ");
+                    int diaNacimiento = scanner.nextInt();
+
+                    System.out.println("Ingrese la curp del cliente: ");
+                    String curp = scanner.nextLine();
+
+                    System.out.println("Ingresa el correo electronico: ");
+                    String correo = scanner.nextLine();
+                    LocalDate fechaNacimiento = LocalDate.of(añoNacimiento, mesNacimiento, diaNacimiento);
+
+                    Cliente cliente = new Cliente(idCliente,nombre,apellido,telefono,contraseña, fechaNacimiento,curp,correo );
+
+                    System.out.println("\n Cliente registrado correctamente ");
+                    break;
+
+                case 2:
                     cine.registrarPelicula();
                     break;
-                case 2:
+                case 3:
                     System.out.println("---Eliminar una pelicula---");
                     this.mostrarListaPeliculas();
                     System.out.println("Ingrese el id de la pelicula que desea eliminar: ");
                     String idPeliculaE = scanner.nextLine();
                     cine.eliminarPelicula(idPeliculaE);
                     break;
-                case 3:
+                case 4:
                     System.out.println("---Actualizar una pelicula---");
                     this.mostrarListaPeliculas();
                     System.out.println("Ingrese el id de la pelicula que desea actualizar: ");
                     String idPeliculaA = scanner.nextLine();
                     cine.actualizarDatosPelicula(idPeliculaA);
                     break;
-                case 4:
+                case 5:
                     System.out.println("---Dulceria---");
                     break;
-                case 5:
+                case 6:
                     System.out.println("---Registrar empleado---");
                     break;
-                case 6:
+                case 7:
                     Inventario inventario = new Inventario();
                     respuesta = 0;
                     boolean continuar;
@@ -135,7 +174,7 @@ public class Menu {
                         } while (continuar);
                     }
                     break;
-                case 7:
+                case 8:
                     inventario = new Inventario();
                     System.out.println("\n---Eliminar un producto---");
 
@@ -145,7 +184,7 @@ public class Menu {
                     inventario.eliminarProducto(nombreProducto);
 
                     break;
-                case 8:
+                case 9:
                     boolean band8 = true;
 
                     System.out.println("\n---Asignar pelicula a sala---");

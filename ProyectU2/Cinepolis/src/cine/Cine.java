@@ -8,6 +8,7 @@ import usuarios.cliente.Cliente;
 import utils.EstadoPelicula;
 import utils.Rol;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.*;
 
@@ -44,6 +45,20 @@ public class Cine {
 
         return String.format("P-%d-%d", longitudPeliculaMasUno, numeroAleatorio);
     }
+
+    public String generarIdCliente(){  // ID que inicie con C - año actual - mes actual - listaClientes+1 - random 1/100000
+        Random random = new Random();
+
+        LocalDate fecha = LocalDate.now();
+        int anoActual= fecha.getYear();
+        int mesActual= fecha.getMonthValue();
+        int longitudClientes = this.listaClientes.size() +1 ;
+        int numeroAleatorio= random.nextInt(10000);
+
+        String id = String.format("C%d%d%d%d",
+                anoActual,mesActual,longitudClientes,numeroAleatorio);
+
+        return id ; }
 
     //------------Métodos para C.R.U.D----------------
 
