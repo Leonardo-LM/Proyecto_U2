@@ -20,7 +20,7 @@ public class Menu {
     private final Scanner scanner = new Scanner(System.in);
     private final Cine cine = new Cine();
     public Sala sala;
-
+    Cine cineP = new Cine();
 
     public void login (){
         int intesntosMax = 5, intentosUsuario=0;
@@ -248,6 +248,24 @@ public class Menu {
                     2.-Mostrar dulceria
                     3.-Elegir pelicula
                     4.-Elegir asientos  """); /// metodo mostrarAsientos
+        switch (respuesta){
+            case 1:
+                cineP.mostrarCartelera();
+                break;
+
+            case 2:
+                break;
+
+            case 3:
+                break;
+
+            case 4:
+                cineP.mostrarAsientos();
+                System.out.println("¿Que asientos elige? ");
+                String asientos = scanner.nextLine();
+                sala.venderAsiento(asientos);
+                break;
+        }
         }
     }
 }

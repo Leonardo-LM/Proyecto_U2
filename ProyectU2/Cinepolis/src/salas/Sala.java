@@ -55,9 +55,9 @@ public class Sala {
 
     // Metodo para vender un asiento
 
-    public boolean venderAsiento(int indice) {
-        if (indice >= 0 && indice < Asientos.size()) {
-            Asiento asiento = Asientos.get(indice);
+    public boolean venderAsiento(String indice) {
+        if (indice.length() >= 0 && indice.length() < Asientos.size()) {
+            Asiento asiento = Asientos.get(indice.length());
             if (asiento.getEstado() == EstadoAsiento.RESERVADO) {
                 asiento.setEstado(EstadoAsiento.VENDIDO);
                 return true;
