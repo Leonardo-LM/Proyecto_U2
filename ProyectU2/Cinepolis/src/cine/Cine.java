@@ -8,6 +8,7 @@ import usuarios.cliente.Cliente;
 import utils.EstadoPelicula;
 import utils.Rol;
 
+import javax.swing.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.*;
@@ -26,10 +27,11 @@ public class Cine {
     public LocalDate fechaNacimientoAdmin = LocalDate.of(2004, 11, 23);
 
     public Cine(Administrador administrador) {
-        administrador = new Administrador("A-1", "Admin", "1", "222", Rol.ADMINISTRADOR);
+        administrador = new Administrador("A-1", "Admin", "1", "222", "ajcrrf", Rol.ADMINISTRADOR);
         this.listaAdministradores.add(administrador);
         this.listaUsuarios.add(administrador);
     }
+
     public Cine() {
     }
 
@@ -39,6 +41,7 @@ public class Cine {
         cartelera.listaPeliculas.add(pelicula);
 
     }
+
     public void registrarHorarioPelicula() {
 
     }
@@ -46,14 +49,14 @@ public class Cine {
     //--------------Métodos para generar id´s------------
     public String generarIdPelicula() {
         // p - {longitud usuarios.pacientes +1} - {1-100000}
-        int longitudPeliculaMasUno =  this.listaPeliculas.size() + 1;
-        int numeroAleatorio = random.nextInt(1,100000);
+        int longitudPeliculaMasUno = this.listaPeliculas.size() + 1;
+        int numeroAleatorio = random.nextInt(1, 100000);
 
         return String.format("P-%d-%d", longitudPeliculaMasUno, numeroAleatorio);
     }
     //------------Métodos para C.R.U.D----------------
 
-    public void registrarPelicula(){
+    public void registrarPelicula() {
         System.out.println("Registro de una pelicula");
         String id = this.generarIdPelicula();
         System.out.print("Ingrese el titulo: ");
@@ -107,6 +110,7 @@ public class Cine {
         this.registrarPelicula(pelicula);
         System.out.println("Registro Exitoso");
     }
+
     public void actualizarDatosPelicula(String idPelicula) {
         Optional<Pelicula> peliculaEncontrada = this.listaPeliculas.stream().filter(
                 pelicula -> pelicula.getId().equals(idPelicula)).findFirst();
@@ -117,7 +121,7 @@ public class Cine {
             System.out.println("Nuevo Titulo: ");
             String nuevoTitulo = scanner.nextLine();
 
-            int duracion=0;
+            int duracion = 0;
             boolean bandDuracion = false;
             System.out.println("Duracion actual: " + peliculaEncontrada.get().getDuracion());
             do {
@@ -127,11 +131,11 @@ public class Cine {
                 if (scanner.hasNextInt()) {
                     duracion = scanner.nextInt();
                     bandDuracion = true;
-                }else{
+                } else {
                     System.out.println("Ingresa un valor entero, intenta de nuevo");
                     scanner.next();
                 }
-            }while (!bandDuracion);
+            } while (!bandDuracion);
 
             scanner.nextLine();
             System.out.println("Género actual: " + peliculaEncontrada.get().getGenero());
@@ -150,10 +154,10 @@ public class Cine {
             int seleccion;
             System.out.println("Estado de pelicula actual: " + peliculaEncontrada.get().getEstado());
             while (!bandEstado) {
-            System.out.print("Nuevo Estado de la pelicula:" +
-                    "\n1. Estado Actual " +
-                    "2. Estado Proximamente");
-            System.out.print("Selección: ");
+                System.out.print("Nuevo Estado de la pelicula:" +
+                        "\n1. Estado Actual " +
+                        "2. Estado Proximamente");
+                System.out.print("Selección: ");
                 //Otra vez de que si nos equivoquemos e ingresemos una letra, que no se cierre el programa
                 if (scanner.hasNextInt()) {
                     seleccion = scanner.nextInt();
@@ -177,19 +181,58 @@ public class Cine {
             peliculaEncontrada.get().setGenero(genero);
             peliculaEncontrada.get().setClasificacion(clasificacion);
             peliculaEncontrada.get().setSinopsis(sinopsis);
-        }else{
+        } else {
             System.out.println("\nPelicula no encontrada");
         }
     }
 
     public void eliminarPelicula(String idPelicula) {
-            for (Pelicula pelicula : this.listaPeliculas) {
-                if (pelicula.getId().equals(idPelicula)) {
-                    this.listaPeliculas.remove(pelicula);
-                    cartelera.listaPeliculas.remove(pelicula);
+        for (Pelicula pelicula : this.listaPeliculas) {
+            if (pelicula.getId().equals(idPelicula)) {
+                this.listaPeliculas.remove(pelicula);
+                cartelera.listaPeliculas.remove(pelicula);
 
-                    return;
+                return;
+            }
+        }
+    }
+
+    public Usuario validarInicioSesion(String idUsuario, String contraseña) {
+        for (Usuario usuario : this.listaUsuarios) {
+            if (usuario.getId().equals(idUsuario) && usuario.getContrasenia().equals(contraseña)) {
+                return usuario;
+            }
+
+        }
+        return null;
+    }
+
+    public void mostrarAsientos () {
+
+        //String mostrarAsientos [] [];
+        String butacas[] = {"A", "B", "C", "D", "E", "F"};
+        int filas = 6, columnas = 6, columna;
+        int fila;
+
+        String mostrarAsientos[][] = new String[filas][columnas];
+
+        //// llenar la matriz
+        for (fila = 0; fila < filas; fila++) {
+            for (columna = 0; columna < columnas; columna++) {
+                mostrarAsientos[fila][columna] = butacas[fila] + String.valueOf(columna + 1);
+            }
+        }
+
+        System.out.println("\t\tPANTALLA\n========================");
+
+            for (fila = 0; fila < filas; fila++) {
+                for (columna = 0; columna < columnas; columna++) {
+                    System.out.print (mostrarAsientos[fila][columna] + "\t");
+
                 }
+                System.out.println("\t");
             }
     }
+
+
 }

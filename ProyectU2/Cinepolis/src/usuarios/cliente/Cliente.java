@@ -10,8 +10,8 @@ public class Cliente extends Usuario {
     final private String CURP;
     public String correoE;
 
-    public Cliente(String id, String nombre, String apellido, String telefono, LocalDate fechaNacimiento, String CURP, String correoE) {
-        super(id, nombre, apellido, telefono, Rol.CLIENTE);
+    public Cliente(String id, String nombre, String apellido, String telefono, String contrasenia, LocalDate fechaNacimiento, String CURP, String correoE) {
+        super(id, nombre, apellido, telefono,contrasenia, Rol.CLIENTE);
         this.fechaNacimiento = fechaNacimiento;
         this.correoE = correoE;
         this.CURP = CURP;

@@ -3,7 +3,9 @@ package compra;
 import cartelera.Pelicula;
 import usuarios.cliente.Cliente;
 import salas.Sala;
+import utils.TipoAsiento;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class Compra {
@@ -67,8 +69,21 @@ public class Compra {
         return metodoPago;
     }
 
-    public void setMetodoPago(String metodoPago) {
-        this.metodoPago = metodoPago;
-    }
+    public void setMetodoPago(String metodoPago) { this.metodoPago = metodoPago; }
+
+    public int validarDescuento(LocalDate cumpleañosCliente, TipoAsiento asiento){
+        LocalDate fechaActual = LocalDate.now();
+        int descuento = 0;
+
+        if(fechaActual.getMonth().equals(cumpleañosCliente.getMonth())){
+            if(asiento== TipoAsiento.PREMIUM){
+                descuento= 60;
+            }
+            else if (asiento == TipoAsiento.VIP){
+                descuento= 35;
+            }
+        }
+      return descuento;
+    } //// (costo*descuento)/100
 }
-//validador descuento
+

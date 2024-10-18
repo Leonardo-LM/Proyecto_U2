@@ -6,9 +6,11 @@ import cartelera.Pelicula;
 import cine.Cine;
 import dulceria.Inventario;
 import dulceria.Producto;
+import usuarios.Usuario;
 import usuarios.administrador.Administrador;
 import usuarios.cliente.Cliente;
 import utils.EstadoPelicula;
+import utils.Rol;
 
 import java.time.LocalTime;
 import java.util.Scanner;
@@ -17,6 +19,42 @@ public class Menu {
     private final Scanner scanner = new Scanner(System.in);
     private final Cine cine = new Cine();
 
+
+    public void login (){
+        int intesntosMax = 5, intentosUsuario=0;
+
+        while(intentosUsuario<intesntosMax){
+            System.out.println("** BIENVENIDOS A CINEPOLIS ** \n Ingrese sesión para continuar ");
+            System.out.println("Ingresa tu usuario: ");
+            String usuario = scanner.nextLine();
+
+            System.out.println("Ingresa tu contaseña : ");
+            String contaseña = scanner.nextLine();
+
+            Usuario usuarioEnSesion = cine.validarInicioSesion(usuario, contaseña);
+
+            if(usuarioEnSesion instanceof Usuario){
+
+                if(usuarioEnSesion.getRol() == Rol.CLIENTE){
+                    Cliente clienteEnSesion = (Cliente) usuarioEnSesion;
+                    this.mostrarMenuCliente(clienteEnSesion);
+                    intentosUsuario = 0; }
+
+                else {
+                    Administrador adminEnSesion = (Administrador) usuarioEnSesion;
+                    this.mostrarMenuAdmin(adminEnSesion);
+                    intentosUsuario = 0;
+                }
+            } else {
+                 intentosUsuario = mostrarErrorInicioSesion(intentosUsuario);
+
+            } System.out.println("Intentos maximos permitidos ");
+        }
+    }
+    private int mostrarErrorInicioSesion(int intentosUsuario){
+        System.out.println("Usuario o contraseña incorrectos, intenta de nuevo");
+        return intentosUsuario+1;
+    }
     //-------------- Métodos para mostrar -----------------
     private void mostrarMenuAdmin(Administrador admin) {
         int respuesta = 0;
@@ -127,7 +165,7 @@ public class Menu {
                     1.-Mostrar cartelera
                     2.-Mostrar dulceria
                     3.-Elegir pelicula
-                    4.-""");
+                    4.-Elegir asientos  """); /// metodo mostrarAsientos
         }
     }
 }
