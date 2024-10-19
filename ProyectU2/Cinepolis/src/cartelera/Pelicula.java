@@ -30,6 +30,17 @@ public class Pelicula {
     public void agregarFuncion(LocalTime funcion) {
         Horario.add(funcion);
     }
+    public String mostrarInformacionpelicula() {
+        return "Pelicula{" +
+                "id='" + id + '\'' +
+                ", titulo='" + titulo + '\'' +
+                ", duracion='" + duracion + '\'' +
+                ", genero='" + genero + '\'' +
+                ", Clasificacion='" + clasificacion + '\'' +
+                ", sinopsis='" + sinopsis + '\'' +
+                ", estado='" + estado + '\'' +
+                '}';
+    }
 
     //-------------Getters y Setters--------------
     public String getId() {

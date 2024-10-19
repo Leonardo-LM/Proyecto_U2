@@ -79,7 +79,7 @@ public class Menu {
         //movi de private a public para probar
         int respuesta = 0;
 
-        while (respuesta != 12) {
+        while (respuesta != 14) {
             System.out.println("Buen dia " + admin.nombre + " " + admin.apellido);
             System.out.println("""
                     1.-Registrar un cliente
@@ -93,7 +93,9 @@ public class Menu {
                     9.-Asignar pelicula a sala
                     10.-Compra de un Boleto
                     11.-Mostrar Boletos
-                    12.-Salir""");
+                    12.-Mostrar Clientes
+                    13.-Mostrar Peliculas
+                    14.-Salir""");
             System.out.print("Elija una opción: ");
             respuesta = scanner.nextInt();
 
@@ -222,6 +224,14 @@ public class Menu {
                     cine.mostrarBoletosTodos();
                     break;
                 case 12:
+                    System.out.println("\n--Mostrar Clientes---");
+                    cine.mostrarClientesTodos();
+                    break;
+                case 13:
+                    System.out.println("\n--Mostrar Peliculas---");
+                    cine.mostrarPeliculasTodas();
+                    break;
+                case 14:
                     System.out.println("\n-----Adiosito-----\n");
                     return;
             }
@@ -250,7 +260,7 @@ public class Menu {
 
         System.out.println("Ingresa el nombre del cliente: ");
         String nombre = scanner.nextLine();
-
+        scanner.nextLine();
         System.out.println("Ingresa el apellido del cliente: ");
         String apellido = scanner.nextLine();
 
@@ -270,14 +280,14 @@ public class Menu {
 
         System.out.println("Ingrese la curp del cliente: ");
         String curp = scanner.nextLine();
-
+         scanner.nextLine();
         System.out.println("Ingresa el correo electronico: ");
         String correo = scanner.nextLine();
         LocalDate fechaNacimiento = LocalDate.of(añoNacimiento, mesNacimiento, diaNacimiento);
 
         Cliente cliente = new Cliente(idCliente,nombre,apellido,telefono,contraseña, fechaNacimiento,curp,correo );
-        cine.listaClientes.add(cliente);
-
+        //cine.listaClientes.add(cliente);
+        cine.registrarCliente(cliente);
         System.out.println("\n Cliente registrado correctamente ");
     }
 

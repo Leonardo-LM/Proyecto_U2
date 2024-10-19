@@ -19,7 +19,7 @@ public class Cliente extends Usuario {
 
     // Método para mostrar información del cliente
 
-    public String informacionCliente() {
+    public String mostrarInformacionCliente() {
         return "Cliente{" +
                 "id='" + id + '\'' +
                 ", nombre='" + nombre + '\'' +
@@ -29,6 +29,7 @@ public class Cliente extends Usuario {
                 ", direccion='" + correoE + '\'' +
                 '}';
     }
+
 
     //-------------Getters y Setters-------------
 

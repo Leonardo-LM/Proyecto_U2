@@ -33,14 +33,15 @@ public class Cine {
     public ArrayList<Asiento> listaAsientos = new ArrayList<>();
     public ArrayList<Boleto> listaBoletos = new ArrayList<>();
 
-    public Cine(Administrador administrador) {
-        administrador = new Administrador("A-1", "Admin", "1", "222", "ajcrrf", Rol.ADMINISTRADOR);
-        this.listaAdministradores.add(administrador);
-        this.listaUsuarios.add(administrador);
+//mod para q funcionara
+    public Cine() {
+        this.administradorPredeterminado = new Administrador("A-1", "Admin", "1", "222", "ajcrrf", Rol.ADMINISTRADOR);
+        this.listaAdministradores.add(this.administradorPredeterminado);
+        this.listaUsuarios.add(this.administradorPredeterminado);
     }
 
-    public Cine() {
-    }
+   // public Cine() {
+    //}
 
     //------------- Métodos de Agregación -----------------
 
@@ -148,8 +149,8 @@ public class Cine {
                     band = false;
                 }
             } while (band);
-
-            this.registrarPelicula(pelicula);
+            registrarPelicula1(pelicula);
+            //this.registrarPelicula(pelicula);
             System.out.println("Registro Exitoso");
 
             System.out.print("Quiere agregar otra pelicula: s/n");
@@ -386,5 +387,23 @@ public class Cine {
         for(Boleto boleto : this.listaBoletos){
             System.out.println(boleto.mostrarInformacion());
         }
+    }
+    public void mostrarClientesTodos(){
+        System.out.println("\n CLIENTES REGISTRADOS");
+        for(Cliente  cliente: this.listaClientes){
+            System.out.println(cliente.mostrarInformacionCliente());
+        }
+    }
+    public void registrarCliente(Cliente cliente){
+        this.listaClientes.add(cliente);
+    }
+    public void mostrarPeliculasTodas(){
+        System.out.println("\n PELICULAS REGISTRADAS");
+        for(Pelicula pelicula: this.listaPeliculas){
+            System.out.println(pelicula.mostrarInformacionpelicula());
+        }
+    }
+    public void registrarPelicula1(Pelicula pelicula){
+        this.listaPeliculas.add(pelicula);
     }
 }
