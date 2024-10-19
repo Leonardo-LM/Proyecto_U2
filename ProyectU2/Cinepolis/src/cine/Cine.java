@@ -1,10 +1,12 @@
 package cine;
 
 import cartelera.Pelicula;
+import compra.Compra;
 import salas.Sala;
 import usuarios.Usuario;
 import usuarios.administrador.Administrador;
 import usuarios.cliente.Cliente;
+import usuarios.empleados.Empleado;
 import utils.EstadoPelicula;
 import utils.Rol;
 
@@ -15,11 +17,14 @@ import java.util.*;
 public class Cine {
     public ArrayList<Usuario> listaUsuarios = new ArrayList<>();
     public ArrayList<Administrador> listaAdministradores = new ArrayList<>();
+    public ArrayList<Empleado> listaEmpleados = new ArrayList<>();
     public ArrayList<Cliente> listaClientes = new ArrayList<>();
     public ArrayList<Pelicula> listaPeliculas = new ArrayList<>();
     public ArrayList<Sala> listaSalas = new ArrayList<>();
+    public  ArrayList<Compra> listaCompras = new ArrayList<>();
     private Random random = new Random();
     public Scanner scanner = new Scanner(System.in);
+    public Administrador administrador;
 
     public Cine(Administrador administrador) {
         administrador = new Administrador("A-1", "Admin", "1", "222", "ajcrrf", Rol.ADMINISTRADOR);
@@ -39,7 +44,7 @@ public class Cine {
     //--------------Métodos para generar id´s------------
 
     public String generarIdPelicula() {
-        // p - {longitud usuarios.pacientes +1} - {1-100000}
+        // p - {longitudListaPeliculas  +1} - {1-100000}
         int longitudPeliculaMasUno = this.listaPeliculas.size() + 1;
         int numeroAleatorio = random.nextInt(1, 100000);
 
@@ -47,7 +52,6 @@ public class Cine {
     }
 
     public String generarIdCliente(){  // ID que inicie con C - año actual - mes actual - listaClientes+1 - random 1/100000
-        Random random = new Random();
 
         LocalDate fecha = LocalDate.now();
         int anoActual= fecha.getYear();
@@ -55,10 +59,30 @@ public class Cine {
         int longitudClientes = this.listaClientes.size() +1 ;
         int numeroAleatorio= random.nextInt(10000);
 
-        String id = String.format("C%d%d%d%d",
-                anoActual,mesActual,longitudClientes,numeroAleatorio);
+        return String.format("C-%d-%d-%d-%d", anoActual,mesActual,longitudClientes,numeroAleatorio);
+    }
 
-        return id ; }
+    public String generarIdEmpleado(){  // ID que inicie con E - año actual - mes actual - listaEmpleados+1 - random 1/100000
+
+        LocalDate fecha = LocalDate.now();
+        int anoActual= fecha.getYear();
+        int mesActual= fecha.getMonthValue();
+        int longitudEmpleados = this.listaEmpleados.size() +1 ;
+        int numeroAleatorio= random.nextInt(10000);
+
+        return String.format("E-%d-%d-%d-%d",anoActual,mesActual,longitudEmpleados,numeroAleatorio);
+    }
+
+    public String generarIdCompra(){  // ID que inicie con E - año actual - mes actual - listaEmpleados+1 - random 1/100000
+
+        LocalDate fecha = LocalDate.now();
+        int anoActual= fecha.getYear();
+        int mesActual= fecha.getMonthValue();
+        int longitudListaCompras = this.listaCompras.size() +1 ;
+        int numeroAleatorio= random.nextInt(10000);
+
+        return String.format("VTA-%d-%d-%d-%d",anoActual,mesActual,longitudListaCompras,numeroAleatorio);
+    }
 
     //------------Métodos para C.R.U.D----------------
 
@@ -75,7 +99,7 @@ public class Cine {
             System.out.print("Ingrese el genero: ");
             String genero = scanner.nextLine();
             System.out.print("Ingrese la clasificación: ");
-            String clasificacion = scanner.nextLine();
+            String clasificacion = scanner.nextLine().toUpperCase();
             System.out.print("Ingrese la sinopsis: ");
             String sinopsis = scanner.nextLine();
 
@@ -97,21 +121,29 @@ public class Cine {
 
             boolean band = true;
             LocalTime funcion = null;
+            System.out.println("Ingrese la hora y los minutos de la función: ");
             do {
-                System.out.println("Ingrese la hora y los minutos de la función: ");
                 System.out.print("Ingrese la hora: ");
                 int hora = scanner.nextInt();
                 System.out.print("Ingrese los minutos: ");
                 int minutos = scanner.nextInt();
                 scanner.nextLine();
 
-                funcion = LocalTime.of(hora, minutos);
-                pelicula.agregarFuncion(funcion);
+                if (hora >= 0 && hora <= 24){
+                    if (minutos >= 0 && minutos <= 59){
+                        funcion = LocalTime.of(hora, minutos);
+                        pelicula.agregarFuncion(funcion);
 
-                System.out.print("¿Desea Agregar otra función? S/N");
-                String r = scanner.nextLine().charAt(0) + "";
-                if (!r.toLowerCase().equals("s")) {
-                    band = false;
+                        System.out.print("¿Desea Agregar otra función? S/N");
+                        String r = scanner.nextLine().charAt(0) + "";
+                        if (!r.toLowerCase().equals("s")) {
+                            band = false;
+                        }
+                    }else{
+                        System.out.println("Minutos incorrectos. Deben estar entre 0 y 59. Por favor, intente nuevamente.");
+                    }
+                }else{
+                    System.out.println("Hora incorrecta. Debe estar entre 0 y 24. Por favor, intente nuevamente");
                 }
             } while (band);
 
@@ -254,20 +286,37 @@ public class Cine {
 
     public void mostrarCartelera() {
         int i = 1;
+        System.out.println();
         System.out.println("=====================================");
-        System.out.println("             CARTELERA               ");
+        System.out.println("         CARTELERA CINEPOLIS          ");
         System.out.println("=====================================");
         for (Pelicula pelicula : listaPeliculas) {
-            System.out.println(i + ". " + String.format("Titulo: %s", pelicula.getTitulo()));
-            System.out.println("   Clasificación: " + pelicula.getClasificacion());
-            System.out.println("   Duración: " + pelicula.getDuracion() + " min");
-            System.out.print("   Horarios: \n");
-            for (LocalTime funcion : pelicula.getHorario()) {
-                System.out.print(funcion + " - ");
+            if (pelicula.estado == EstadoPelicula.ACTUAL){
+                System.out.println(i + ". " + String.format("Titulo: %s", pelicula.getTitulo()));
+                System.out.println("   Clasificación: " + pelicula.getClasificacion());
+                System.out.println("   Duración: " + pelicula.getDuracion() + " min");
+                System.out.print("   Horarios: \n");
+                for (LocalTime funcion : pelicula.getHorario()) {
+                    System.out.print(funcion + " ");
+                }
+                System.out.println("\n-------------------------------------");
+                i++;
             }
-            System.out.println("\n-------------------------------------");
-            i++;
         }
+        List<Pelicula> listaPeliculasEstadoProx =this.listaPeliculas.stream()
+                .filter(estado -> estado.getEstado()
+                        .equals(utils.EstadoPelicula.PROXIMAMENTE))
+                .toList();
+        if (listaPeliculasEstadoProx.size() > 0) {
+            System.out.println("PRÓXIMAMENTE");
+            for (Pelicula pelicula : listaPeliculasEstadoProx) {
+                if (pelicula.estado == EstadoPelicula.PROXIMAMENTE){
+                    System.out.println(String.format("Titulo: %s", pelicula.getTitulo()) + " ");
+                }
+                System.out.println("\n-------------------------------------");
+            }
+        }
+        System.out.println();
     }
 
 }
