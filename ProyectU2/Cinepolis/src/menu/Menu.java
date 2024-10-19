@@ -80,6 +80,7 @@ public class Menu {
         int respuesta = 0;
 
         while (respuesta != 14) {
+            cine.inicializar(); //necesario para no 10
             System.out.println("Buen dia " + admin.nombre + " " + admin.apellido);
             System.out.println("""
                     1.-Registrar un cliente
@@ -177,44 +178,55 @@ public class Menu {
                 case 10:
 
                     System.out.println("\n---Compra de un boleto---");
+                    int mesActual = LocalDate.now().getMonthValue();//para premium o vip
                     System.out.println("Ingresa el Id del cliente");
-                    String clienteId= scanner.nextLine();
                     scanner.nextLine();
+                    String clienteId= scanner.nextLine();
+                    System.out.println("ID introducido: '" + clienteId + "'");
                     String nombreCliente=cine.buscarNombreClientePorId(clienteId);
+                    System.out.println(nombreCliente);
+                    int MesCliente=cine.MesCumpleañosParaVerSiHayDescuento(clienteId);//este al VIP O PREMIUM
+
 
                     System.out.println("Ingresa el Id de la pelicula que desea el cliente");
                     String peliculaId= scanner.nextLine();
+                    System.out.println("ID introducido: '" + peliculaId + "'");
                     String tituloPelicula=cine.buscarTituloPeliculaPorId(peliculaId);
 
                     System.out.println("Ingresa el No de la sala que corresponde");
                     int NoSala= scanner.nextInt();
 
-
-                    int AsientoOcupadoDisponible=2;
-                    String FilaColum="A1";
-                    while(AsientoOcupadoDisponible!=1) {
-                    System.out.println("Ingresa la fila y columna del asiento que quiere");
                     cine.mostrarAsientos();
-                    FilaColum= scanner.nextLine();//A1
-                    AsientoOcupadoDisponible=cine.SeleccionarAsiento(FilaColum);
-                    }
+                    System.out.print("Ingresa el ID del asiento a reservar (ejemplo: A1): ");
+                    scanner.nextLine();
+                    String idAsiento = scanner.nextLine();
+                    String resultado = cine.reservarAsiento(idAsiento); //pasamos a obj
+                    System.out.println(resultado);
 
                     System.out.println("Ingresa tipo de asiento escribe PREMIUM O VIP");
                     String tipo= scanner.nextLine();
                     double x=100;
                     TipoAsiento tipoAsiento;//=TipoAsiento.Normal;
                     if(tipo.equals("PREMIUM")) {
+                        if(MesCliente == mesActual){
                         tipoAsiento= TipoAsiento.PREMIUM;
+                        x=400*0.6;
+                        }else{
                         x=400;
+                        }
                     } else if(tipo.equals("VIP")) {
-                        tipoAsiento= TipoAsiento.VIP;
-                        x=200;
+                        if(MesCliente == mesActual){
+                            tipoAsiento= TipoAsiento.VIP;
+                            x=200*0.35;
+                        }else{
+                            x=200;
+                        }
                     } else {
                         System.out.println("Palabra incorrecta");
                     }
 
                     String idBoleto= cine.generarIdBoleto();//generamos id del compra.boleto
-                    Boleto boleto =new Boleto(idBoleto,NoSala, LocalDateTime.now(),tituloPelicula,FilaColum,tipo,nombreCliente,x);
+                    Boleto boleto =new Boleto(idBoleto,NoSala, LocalDateTime.now(),tituloPelicula,resultado,tipo,nombreCliente,x);
                     cine.registrarBoleto(boleto);
                     System.out.println(cine.listaBoletos.get(0));
                     boleto.mostrarInformacion();
@@ -259,8 +271,9 @@ public class Menu {
         System.out.println("---Registrar cliente---");
 
         System.out.println("Ingresa el nombre del cliente: ");
-        String nombre = scanner.nextLine();
         scanner.nextLine();
+        String nombre = scanner.nextLine();
+
         System.out.println("Ingresa el apellido del cliente: ");
         String apellido = scanner.nextLine();
 

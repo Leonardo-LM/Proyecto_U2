@@ -29,7 +29,6 @@ public class Cine {
     private Random random = new Random();
     public Scanner scanner = new Scanner(System.in);
     public Administrador administradorPredeterminado;
-    //
     public ArrayList<Asiento> listaAsientos = new ArrayList<>();
     public ArrayList<Boleto> listaBoletos = new ArrayList<>();
 
@@ -38,9 +37,10 @@ public class Cine {
         this.administradorPredeterminado = new Administrador("A-1", "Admin", "1", "222", "ajcrrf", Rol.ADMINISTRADOR);
         this.listaAdministradores.add(this.administradorPredeterminado);
         this.listaUsuarios.add(this.administradorPredeterminado);
+
     }
 
-   // public Cine() {
+    //public Cine() {
     //}
 
     //------------- Métodos de Agregación -----------------
@@ -318,7 +318,7 @@ public class Cine {
     public String buscarNombreClientePorId(String id) {
         for ( Cliente cliente : listaClientes) {
             if (cliente.getId().equals(id)) {
-                return cliente.getNombre();
+                return cliente.getNombre(); //modf
             }
         }
         return "El id es incorrecto";
@@ -333,48 +333,36 @@ public class Cine {
         return "El id es incorrecto";
     }
 
-    public  void inicializarAsientos() {
-        String[] filas = {"A", "B", "C", "D", "E", "F"};
-        TipoAsiento tipo;
-        EstadoAsiento estado;
-        for (String fila : filas) {
-            for (int i = 1; i <= 6; i++) {
-                String id = fila + i;
-                tipo= TipoAsiento.NORMAL;
-                Asiento asiento = new Asiento(tipo);
-                asiento.Id = id; // Asignar el ID al asiento
-                asiento.setEstado(EstadoAsiento.DISPONIBLE);
-                this.listaAsientos.add(asiento); //Agg lista:)
+
+    public final int FILAS = 6;
+    public final int COLUMNAS = 6;
+ public ArrayList<String>asientos;
+    public void inicializar() {
+        asientos = new ArrayList<>();
+        for (int i = 0; i < FILAS; i++) {
+            for (int j = 0; j < COLUMNAS; j++) {
+                asientos.add((char) ('A' + i) + "" + (j + 1)); // Inicializa con A1, A2, ..., F6
             }
         }
     }
-
-    public Asiento buscarAsiento(String id) {
-        for (Asiento asiento : listaAsientos) {
-            if (asiento.getId().equalsIgnoreCase(id)) {
-                return asiento;
-            }
-        }
-        return null;
+    public int obtenerIndicesAsiento(String idAsiento) {
+        return asientos.indexOf(idAsiento);
+    }
+    public boolean estaReservado(int indice) {
+        return indice >= 0 && asientos.get(indice).equals("X"); // Verifica si el asiento está reservado
     }
 
-    public int SeleccionarAsiento(String idAsiento) {
-        inicializarAsientos();
-        Asiento asientoSeleccionado = buscarAsiento(idAsiento);
-        if (asientoSeleccionado != null) {
+    public String reservarAsiento(String idAsiento) {
+        int indice =obtenerIndicesAsiento(idAsiento);
 
-            if (asientoSeleccionado.getEstado() == EstadoAsiento.DISPONIBLE) {
-                System.out.println("El asiento " + idAsiento + " está disponible.");
-                asientoSeleccionado.setEstado(EstadoAsiento.RESERVADO);
-                System.out.println("Has reservado el asiento " + idAsiento);
-                return 1;
-            } else {
-                System.out.println("Lo sentimos, el asiento " + idAsiento + " está " + asientoSeleccionado.getEstado());
-                return 2; //--Vuelva a elegir
-            }
+        if (indice == -1) {
+            return "El asiento " + idAsiento + " no existe.";
+        }
+        if (estaReservado(indice)) {
+            return "El asiento " + idAsiento + " ya está ocupado.";
         } else {
-            System.out.println("Asiento no encontrado. Por favor, verifique el ID.");
-            return 2;//vuelva a elegir
+            asientos.set(indice, "X"); // Marca el asiento como reservado
+            return idAsiento;
         }
     }
 
@@ -405,5 +393,15 @@ public class Cine {
     }
     public void registrarPelicula1(Pelicula pelicula){
         this.listaPeliculas.add(pelicula);
+    }
+
+    public int MesCumpleañosParaVerSiHayDescuento(String id) {
+        for ( Cliente cliente : listaClientes) {
+            if (cliente.getId().equals(id)) {
+                int mes = cliente.getFechaNacimiento().getMonthValue();
+                return mes;
+            }
+        }
+        return 0;
     }
 }
