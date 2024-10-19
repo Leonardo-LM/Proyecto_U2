@@ -28,6 +28,7 @@ public class Cine {
     public ArrayList<Compra> listaCompras = new ArrayList<>();
     private Random random = new Random();
     public Scanner scanner = new Scanner(System.in);
+    public Administrador administradorPredeterminado;
     //
     public ArrayList<Asiento> listaAsientos = new ArrayList<>();
     public ArrayList<Boleto> listaBoletos = new ArrayList<>();

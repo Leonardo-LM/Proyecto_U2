@@ -16,6 +16,6 @@ public class Main {
         cine.mostrarAsientos();
         //cine.registrarPelicula();
         cine.mostrarCartelera();
-        menu.mostrarMenuAdmin(admin);
+        menu.mostrarMenuAdmin(cine.administradorPredeterminado);
     }
 }
