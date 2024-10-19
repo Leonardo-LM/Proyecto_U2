@@ -1,11 +1,9 @@
 package dulceria;
 
-import java.util.Random;
 
 public class Producto {
     public String nombre;
     public Double precio;
-    public Random random = new Random();
 
     public Producto(String nombre, Double precio) {
         this.nombre = nombre;

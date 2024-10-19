@@ -6,7 +6,7 @@ public class Boleto {
     public LocalDateTime fechaHora;
     public String nombrePelicula;
     public String asiento;
-    public String tipoAsiento; //VIP O PREMIUM
+    public String tipoAsiento; //VIP, PREMIUM 0 o normal
     public String cliente;
     public double precio;
     //public boolean tipoDescuento; quite de constructor para pruebas

@@ -303,7 +303,7 @@ public class Cine {
             i++;
         }
     }
-//añadi n
+
     public String generarIdBoleto(){
         Random random = new Random();
         LocalDate fecha= LocalDate.now();
@@ -313,6 +313,7 @@ public class Cine {
         String id=String.format("T%d%d%d",anoActual,mesActual,numeroAleatorio);
         return id;
     }
+
     public String buscarNombreClientePorId(String id) {
         for ( Cliente cliente : listaClientes) {
             if (cliente.getId().equals(id)) {
@@ -321,6 +322,7 @@ public class Cine {
         }
         return "El id es incorrecto";
     }
+
     public String buscarTituloPeliculaPorId(String id) {
         for ( Pelicula pelicula : listaPeliculas) {
             if (pelicula.getId().equals(id)) {
@@ -329,7 +331,6 @@ public class Cine {
         }
         return "El id es incorrecto";
     }
-
 
     public  void inicializarAsientos() {
         String[] filas = {"A", "B", "C", "D", "E", "F"};
@@ -375,14 +376,15 @@ public class Cine {
             return 2;//vuelva a elegir
         }
     }
+
     public void registrarBoleto(Boleto boleto){
         this.listaBoletos.add(boleto);
     }
+
     public void mostrarBoletosTodos(){
         System.out.println("\n BOLETOS VENDIDOS");
         for(Boleto boleto : this.listaBoletos){
             System.out.println(boleto.mostrarInformacion());
         }
     }
-   //añadi n
 }

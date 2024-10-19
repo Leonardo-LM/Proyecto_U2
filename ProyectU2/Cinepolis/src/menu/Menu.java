@@ -30,8 +30,14 @@ public class Menu {
 
         int intesntosMax = 5, intentosUsuario=0;
 
+        //Para empezar con el menu del admin
+        this.mostrarMenuAdmin(cine.administradorPredeterminado);
+
         while(intentosUsuario<intesntosMax){
-            System.out.println("** BIENVENIDOS A CINEPOLIS ** \n Innicie sesión para continuar ");
+            System.out.print("\n--------Bienvenido/a--------\n");
+            System.out.println("---Inicia sesión para continuar---");
+
+            scanner.nextLine();
             System.out.println("Ingresa tu usuario: ");
             String usuario = scanner.nextLine();
 
@@ -47,7 +53,9 @@ public class Menu {
                     this.mostrarMenuCliente(clienteEnSesion);
                     intentosUsuario = 0; }
 
-                else {
+                else if (usuarioEnSesion.getRol() == Rol.EMPLEADO){
+                    Empleado empleadoEnSesion = (Empleado) usuarioEnSesion;
+                }else{
                     Administrador adminEnSesion = (Administrador) usuarioEnSesion;
                     this.mostrarMenuAdmin(adminEnSesion);
                     intentosUsuario = 0;
@@ -55,8 +63,9 @@ public class Menu {
             } else {
                  intentosUsuario = mostrarErrorInicioSesion(intentosUsuario);
 
-            } System.out.println("Intentos maximos permitidos ");
+            }
         }
+        System.out.println("Intentos maximos permitidos ");
     }
 
     private int mostrarErrorInicioSesion(int intentosUsuario){
@@ -221,11 +230,13 @@ public class Menu {
     }
 
     //---------Métodos para mostrar datos-------------
+
     public void mostrarListaPeliculas(){
         for (Pelicula pelicula : cine.listaPeliculas){
             System.out.println("Titulo: "+pelicula.titulo + "Id: " + pelicula.id);
         }
     }
+
     public void mostrarIdListaSalas(){
         for (Sala sala : cine.listaSalas){
             System.out.println("Id" + sala.getId());

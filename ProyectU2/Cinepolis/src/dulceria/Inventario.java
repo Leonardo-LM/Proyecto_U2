@@ -3,7 +3,7 @@ package dulceria;
 import java.util.ArrayList;
 
 public class Inventario {
-    public ArrayList<Producto> listaProductos = new ArrayList<Producto>();
+    public ArrayList<Producto> listaProductos = new ArrayList<>();
 
 
     public void registrarProducto(Producto producto) {
@@ -14,7 +14,7 @@ public class Inventario {
     public void eliminarProducto(String nombreProducto) {
         int longitudOriginal = this.listaProductos.size(); // 3
 
-        this.listaProductos.removeIf((producto) -> producto.getNombre() == nombreProducto);
+        this.listaProductos.removeIf((producto) -> producto.getNombre().equals(nombreProducto));
 
         if (longitudOriginal != this.listaProductos.size()) {
             System.out.println("Se eliminó el prodcuto con el ID: " + nombreProducto);
@@ -26,7 +26,7 @@ public class Inventario {
     public void mostrarProductos() {
         System.out.println("\n*** PRODUCTOS EN EL SISTEMA ***");
 
-        if (this.listaProductos.size() == 0) {
+        if (this.listaProductos.isEmpty()) {
             System.out.println("\nNo existen productos en el sistema");
             return;
         }
