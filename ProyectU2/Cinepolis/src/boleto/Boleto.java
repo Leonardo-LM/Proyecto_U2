@@ -9,9 +9,9 @@ public class Boleto {
     public String tipoAsiento; //VIP O PREMIUM
     public String cliente;
     public double precio;
-    public boolean tipoDescuento;
+    //public boolean tipoDescuento; quite de constructor para pruebas
 
-    public Boleto(String id, int noSala, LocalDateTime fechaHora, String nombrePelicula, String asiento, String tipoAsiento, String cliente, double precio, boolean tipoDescuento) {
+    public Boleto(String id, int noSala, LocalDateTime fechaHora, String nombrePelicula, String asiento, String tipoAsiento, String cliente, double precio) {
         this.id = id;
         this.noSala = noSala;
         this.fechaHora = fechaHora;
@@ -20,7 +20,7 @@ public class Boleto {
         this.tipoAsiento = tipoAsiento;
         this.cliente = cliente;
         this.precio = precio;
-        this.tipoDescuento = tipoDescuento;
+
     }
 
     public String getId() {
@@ -87,11 +87,15 @@ public class Boleto {
         this.precio = precio;
     }
 
-    public boolean isTipoDescuento() {
-        return tipoDescuento;
+    public String mostrarInformacion() {
+        return   "Id: " + id +
+                ", No de sala: " + noSala +
+                ", Fecha y Hora: " + fechaHora+
+                ", nombre pelicula: " +nombrePelicula +
+                ", Asiento: " + asiento +
+                ", Tipo Asiento: " + tipoAsiento +
+                ",cliente: " + cliente +
+                ", precio: " + precio;
     }
 
-    public void setTipoDescuento(boolean tipoDescuento) {
-        this.tipoDescuento = tipoDescuento;
-    }
 }

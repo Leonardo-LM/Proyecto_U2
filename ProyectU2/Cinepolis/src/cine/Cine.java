@@ -1,12 +1,16 @@
 package cine;
 
+import boleto.Boleto;
 import cartelera.Pelicula;
+import salas.Asiento;
 import salas.Sala;
 import usuarios.Usuario;
 import usuarios.administrador.Administrador;
 import usuarios.cliente.Cliente;
+import utils.EstadoAsiento;
 import utils.EstadoPelicula;
 import utils.Rol;
+import utils.TipoAsiento;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -20,6 +24,9 @@ public class Cine {
     public ArrayList<Sala> listaSalas = new ArrayList<>();
     private Random random = new Random();
     public Scanner scanner = new Scanner(System.in);
+    //
+    public ArrayList<Asiento> listaAsientos = new ArrayList<>();
+    public ArrayList<Boleto> listaBoletos = new ArrayList<>();
 
     public Cine(Administrador administrador) {
         administrador = new Administrador("A-1", "Admin", "1", "222", "ajcrrf", Rol.ADMINISTRADOR);
@@ -269,5 +276,86 @@ public class Cine {
             i++;
         }
     }
+//añadi n
+    public String generarIdBoleto(){
+        Random random = new Random();
+        LocalDate fecha= LocalDate.now();
+        int anoActual=fecha.getYear();
+        int mesActual= fecha.getMonthValue();
+        int numeroAleatorio= random.nextInt(10,1000);
+        String id=String.format("T%d%d%d",anoActual,mesActual,numeroAleatorio);
+        return id;
+    }
+    public String buscarNombreClientePorId(String id) {
+        for ( Cliente cliente : listaClientes) {
+            if (cliente.getId().equals(id)) {
+                return cliente.getNombre();
+            }
+        }
+        return "El id es incorrecto";
+    }
+    public String buscarTituloPeliculaPorId(String id) {
+        for ( Pelicula pelicula : listaPeliculas) {
+            if (pelicula.getId().equals(id)) {
+               return pelicula.getTitulo();
+            }
+        }
+        return "El id es incorrecto";
+    }
 
+
+    public  void inicializarAsientos() {
+        String[] filas = {"A", "B", "C", "D", "E", "F"};
+        TipoAsiento tipo;
+        EstadoAsiento estado;
+        for (String fila : filas) {
+            for (int i = 1; i <= 6; i++) {
+                String id = fila + i;
+                tipo= TipoAsiento.NORMAL;
+                Asiento asiento = new Asiento(tipo);
+                asiento.Id = id; // Asignar el ID al asiento
+                asiento.setEstado(EstadoAsiento.DISPONIBLE);
+                this.listaAsientos.add(asiento); //Agg lista:)
+            }
+        }
+    }
+
+    public Asiento buscarAsiento(String id) {
+        for (Asiento asiento : listaAsientos) {
+            if (asiento.getId().equalsIgnoreCase(id)) {
+                return asiento;
+            }
+        }
+        return null;
+    }
+
+    public int SeleccionarAsiento(String idAsiento) {
+        inicializarAsientos();
+        Asiento asientoSeleccionado = buscarAsiento(idAsiento);
+        if (asientoSeleccionado != null) {
+
+            if (asientoSeleccionado.getEstado() == EstadoAsiento.DISPONIBLE) {
+                System.out.println("El asiento " + idAsiento + " está disponible.");
+                asientoSeleccionado.setEstado(EstadoAsiento.RESERVADO);
+                System.out.println("Has reservado el asiento " + idAsiento);
+                return 1;
+            } else {
+                System.out.println("Lo sentimos, el asiento " + idAsiento + " está " + asientoSeleccionado.getEstado());
+                return 2; //--Vuelva a elegir
+            }
+        } else {
+            System.out.println("Asiento no encontrado. Por favor, verifique el ID.");
+            return 2;//vuelva a elegir
+        }
+    }
+    public void registrarBoleto(Boleto boleto){
+        this.listaBoletos.add(boleto);
+    }
+    public void mostrarBoletosTodos(){
+        System.out.println("\n BOLETOS VENDIDOS");
+        for(Boleto boleto : this.listaBoletos){
+            System.out.println(boleto.mostrarInformacion());
+        }
+    }
+   //añadi n
 }

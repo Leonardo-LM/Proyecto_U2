@@ -1,17 +1,21 @@
 package menu;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.InputMismatchException;
 
+import boleto.Boleto;
 import cartelera.Pelicula;
 import cine.Cine;
 import dulceria.Inventario;
 import dulceria.Producto;
+import salas.Asiento;
 import salas.Sala;
 import usuarios.Usuario;
 import usuarios.administrador.Administrador;
 import usuarios.cliente.Cliente;
 import utils.Rol;
+import utils.TipoAsiento;
 
 import java.util.Optional;
 import java.util.Scanner;
@@ -23,6 +27,7 @@ public class Menu {
     Cine cineP = new Cine();
 
     public void login (){
+
         int intesntosMax = 5, intentosUsuario=0;
 
         while(intentosUsuario<intesntosMax){
@@ -61,13 +66,14 @@ public class Menu {
 
     //-------------- Métodos para mostrar -----------------
 
-    private void mostrarMenuAdmin(Administrador admin) {
+    public void mostrarMenuAdmin(Administrador admin) {
+        //movi de private a public para probar
         int respuesta = 0;
 
         while (respuesta != 12) {
             System.out.println("Buen dia " + admin.nombre + "-" + admin.apellido);
             System.out.println("""
-                    1.- Registrar un cliente
+                    1.-Registrar un cliente
                     2.-Registrar una pelicula
                     3.-Eliminar una pelicula
                     4.-Actualizar una pelicula
@@ -76,6 +82,8 @@ public class Menu {
                     7.-Agregar producto a dulceria
                     8.-Eliminar producto de dulceria
                     9.-Asignar pelicula a sala
+                    10.-Compra de un Boleto
+                    11.-Mostrar Boletos
                     12.-Salir""");
             System.out.print("Elija una opción: ");
             respuesta = scanner.nextInt();
@@ -88,10 +96,10 @@ public class Menu {
 
                     System.out.println("Ingresa el nombre del cliente: ");
                     String nombre = scanner.nextLine();
-
+                    scanner.nextLine();
                     System.out.println("Ingresa el apellido del cliente: ");
                     String apellido = scanner.nextLine();
-
+                    scanner.nextLine();
                     System.out.println("Ingresa el numero de telefono: ");
                     String telefono = scanner.nextLine();
 
@@ -108,6 +116,7 @@ public class Menu {
 
                     System.out.println("Ingrese la curp del cliente: ");
                     String curp = scanner.nextLine();
+                    scanner.nextLine();
 
                     System.out.println("Ingresa el correo electronico: ");
                     String correo = scanner.nextLine();
@@ -116,6 +125,8 @@ public class Menu {
                     Cliente cliente = new Cliente(idCliente,nombre,apellido,telefono,contraseña, fechaNacimiento,curp,correo );
 
                     System.out.println("\n Cliente registrado correctamente ");
+
+
                     break;
 
                 case 2:
@@ -219,6 +230,55 @@ public class Menu {
                         }
                     }while (band8);
                     break;
+                case 10:
+
+                    System.out.println("\n---Compra de un boleto---");
+                    System.out.println("Ingresa el Id del cliente");
+                    String clienteId= scanner.nextLine();
+                    scanner.nextLine();
+                    String nombreCliente=cine.buscarNombreClientePorId(clienteId);
+
+                    System.out.println("Ingresa el Id de la pelicula que desea el cliente");
+                    String peliculaId= scanner.nextLine();
+                    String tituloPelicula=cine.buscarTituloPeliculaPorId(peliculaId);
+
+                    System.out.println("Ingresa el No de la sala que corresponde");
+                    int NoSala= scanner.nextInt();
+
+
+                    int AsientoOcupadoDisponible=2;
+                    String FilaColum="A1";
+                    while(AsientoOcupadoDisponible!=1) {
+                    System.out.println("Ingresa la fila y columna del asiento que quiere");
+                    cine.mostrarAsientos();
+                    FilaColum= scanner.nextLine();//A1
+                    AsientoOcupadoDisponible=cine.SeleccionarAsiento(FilaColum);
+                    }
+
+                    System.out.println("Ingresa tipo de asiento escribe PREMIUM O VIP");
+                    String tipo= scanner.nextLine();
+                    double x=100;
+                    TipoAsiento tipoAsiento;//=TipoAsiento.Normal;
+                    if(tipo.equals("PREMIUM")) {
+                        tipoAsiento= TipoAsiento.PREMIUM;
+                        x=400;
+                    } else if(tipo.equals("VIP")) {
+                        tipoAsiento= TipoAsiento.VIP;
+                        x=200;
+                    } else {
+                        System.out.println("Palabra incorrecta");
+                    }
+
+                    String idBoleto= cine.generarIdBoleto();//generamos id del boleto
+                    Boleto boleto =new Boleto(idBoleto,NoSala, LocalDateTime.now(),tituloPelicula,FilaColum,tipo,nombreCliente,x);
+                    cine.registrarBoleto(boleto);
+                    System.out.println(cine.listaBoletos.get(0));
+                    boleto.mostrarInformacion();
+                    break;
+                case 11:
+                    System.out.println("\n---Compra de un boleto---");
+                    cine.mostrarBoletosTodos();
+                    break;
                 case 12:
                     System.out.println("\n-----Adiosito-----\n");
                     return;
@@ -268,4 +328,6 @@ public class Menu {
         }
         }
     }
+
+
 }
