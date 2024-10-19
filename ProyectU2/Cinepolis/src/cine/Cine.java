@@ -1,6 +1,6 @@
 package cine;
 
-import boleto.Boleto;
+import compra.boleto.Boleto;
 import cartelera.Pelicula;
 import salas.Asiento;
 import salas.Sala;

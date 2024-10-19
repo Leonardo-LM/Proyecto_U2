@@ -4,12 +4,11 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.InputMismatchException;
 
-import boleto.Boleto;
+import compra.boleto.Boleto;
 import cartelera.Pelicula;
 import cine.Cine;
 import dulceria.Inventario;
 import dulceria.Producto;
-import salas.Asiento;
 import salas.Sala;
 import usuarios.Usuario;
 import usuarios.administrador.Administrador;
@@ -71,64 +70,27 @@ public class Menu {
         int respuesta = 0;
 
         while (respuesta != 12) {
-            System.out.println("Buen dia " + admin.nombre + "-" + admin.apellido);
+            System.out.println("Buen dia " + admin.nombre + " " + admin.apellido);
             System.out.println("""
                     1.-Registrar un cliente
                     2.-Registrar una pelicula
                     3.-Eliminar una pelicula
                     4.-Actualizar una pelicula
                     5.-Mostrar dulceria
-                    5.-Registrar empleado
-                    7.-Agregar producto a dulceria
-                    8.-Eliminar producto de dulceria
-                    9.-Asignar pelicula a sala
-                    10.-Compra de un Boleto
-                    11.-Mostrar Boletos
-                    12.-Salir""");
+                    6.-Registrar empleado
+                    6.-Agregar producto a dulceria
+                    7.-Eliminar producto de dulceria
+                    8.-Asignar pelicula a sala
+                    9.-Compra de un Boleto
+                    10.-Mostrar Boletos
+                    11.-Salir""");
             System.out.print("Elija una opción: ");
             respuesta = scanner.nextInt();
 
             switch (respuesta) {
                 case 1:
-                    String idCliente = cine.generarIdCliente();
-
-                    System.out.println("---Registrar cliente---");
-
-                    System.out.println("Ingresa el nombre del cliente: ");
-                    String nombre = scanner.nextLine();
-                    scanner.nextLine();
-                    System.out.println("Ingresa el apellido del cliente: ");
-                    String apellido = scanner.nextLine();
-                    scanner.nextLine();
-                    System.out.println("Ingresa el numero de telefono: ");
-                    String telefono = scanner.nextLine();
-
-                    System.out.println("Ingrese la contraseña: ");
-                    String contraseña = scanner.nextLine();
-
-                    System.out.println("Ingresa la fehca de nacimiento del cliente:");
-                    System.out.println("ingresa el año: ");
-                    int añoNacimiento = scanner.nextInt();
-                    System.out.println("Ingresa el mes: ");
-                    int mesNacimiento = scanner.nextInt();
-                    System.out.println("Ingresa el día: ");
-                    int diaNacimiento = scanner.nextInt();
-
-                    System.out.println("Ingrese la curp del cliente: ");
-                    String curp = scanner.nextLine();
-                    scanner.nextLine();
-
-                    System.out.println("Ingresa el correo electronico: ");
-                    String correo = scanner.nextLine();
-                    LocalDate fechaNacimiento = LocalDate.of(añoNacimiento, mesNacimiento, diaNacimiento);
-
-                    Cliente cliente = new Cliente(idCliente,nombre,apellido,telefono,contraseña, fechaNacimiento,curp,correo );
-
-                    System.out.println("\n Cliente registrado correctamente ");
-
-
+                    this.registrarCliente();
                     break;
-
                 case 2:
                     cine.registrarPelicula();
                     break;
@@ -269,14 +231,14 @@ public class Menu {
                         System.out.println("Palabra incorrecta");
                     }
 
-                    String idBoleto= cine.generarIdBoleto();//generamos id del boleto
+                    String idBoleto= cine.generarIdBoleto();//generamos id del compra.boleto
                     Boleto boleto =new Boleto(idBoleto,NoSala, LocalDateTime.now(),tituloPelicula,FilaColum,tipo,nombreCliente,x);
                     cine.registrarBoleto(boleto);
                     System.out.println(cine.listaBoletos.get(0));
                     boleto.mostrarInformacion();
                     break;
                 case 11:
-                    System.out.println("\n---Compra de un boleto---");
+                    System.out.println("\n---Compra de un compra.boleto---");
                     cine.mostrarBoletosTodos();
                     break;
                 case 12:
@@ -308,27 +270,63 @@ public class Menu {
                     2.-Mostrar dulceria
                     3.-Elegir pelicula
                     4.-Elegir asientos  """); /// metodo mostrarAsientos
-        switch (respuesta){
-            case 1:
-                cineP.mostrarCartelera();
-                break;
+            switch (respuesta){
+                case 1:
+                    cineP.mostrarCartelera();
+                    break;
 
-            case 2:
-                break;
+                case 2:
+                    break;
 
-            case 3:
-                break;
+                case 3:
+                    break;
 
-            case 4:
-                cineP.mostrarAsientos();
-                System.out.println("¿Que asientos elige? ");
-                String asientos = scanner.nextLine();
-                sala.venderAsiento(asientos);
-                break;
-        }
+                case 4:
+                    cineP.mostrarAsientos();
+                    System.out.println("¿Que asientos elige? ");
+                    String asientos = scanner.nextLine();
+                    sala.venderAsiento(asientos);
+                    break;
+            }
         }
     }
 
-    
+    public void registrarCliente() {
+        String idCliente = cine.generarIdCliente();
+
+        System.out.println("---Registrar cliente---");
+
+        System.out.println("Ingresa el nombre del cliente: ");
+        String nombre = scanner.nextLine();
+
+        System.out.println("Ingresa el apellido del cliente: ");
+        String apellido = scanner.nextLine();
+
+        System.out.println("Ingresa el numero de telefono: ");
+        String telefono = scanner.nextLine();
+
+        System.out.println("Ingrese la contraseña: ");
+        String contraseña = scanner.nextLine();
+
+        System.out.println("Ingresa la fehca de nacimiento del cliente:");
+        System.out.println("ingresa el año: ");
+        int añoNacimiento = scanner.nextInt();
+        System.out.println("Ingresa el mes: ");
+        int mesNacimiento = scanner.nextInt();
+        System.out.println("Ingresa el día: ");
+        int diaNacimiento = scanner.nextInt();
+
+        System.out.println("Ingrese la curp del cliente: ");
+        String curp = scanner.nextLine();
+
+        System.out.println("Ingresa el correo electronico: ");
+        String correo = scanner.nextLine();
+        LocalDate fechaNacimiento = LocalDate.of(añoNacimiento, mesNacimiento, diaNacimiento);
+
+        Cliente cliente = new Cliente(idCliente,nombre,apellido,telefono,contraseña, fechaNacimiento,curp,correo );
+        cine.listaClientes.add(cliente);
+
+        System.out.println("\n Cliente registrado correctamente ");
+    }
 
 }

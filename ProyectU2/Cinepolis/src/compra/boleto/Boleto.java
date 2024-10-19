@@ -1,4 +1,4 @@
-package boleto;
+package compra.boleto;
 import java.time.LocalDateTime;
 public class Boleto {
     public String id;
