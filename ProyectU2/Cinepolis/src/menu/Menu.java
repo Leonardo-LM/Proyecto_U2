@@ -200,7 +200,6 @@ public class Menu {
                 break;
             case 3:
                 System.out.println("Comprar boletos");
-                this.comprarBoleto(cliente);
                 break;
             case 4:
                 cine.mostrarAsientos();
@@ -304,101 +303,5 @@ public class Menu {
         }while (band8);
     }
 
-    //REVISAR
-    public void comprarBoleto(Cliente cliente){
-        String idCompra = cine.generarIdCompra();
 
-        System.out.println("Lista de películas con su ID: ");
-        int i = 1;
-        for (Pelicula pelicula : cine.listaPeliculas) {
-            System.out.println(i + ". Titulo: " + pelicula.titulo + ", Id: " + pelicula.id);
-            i++;
-        }
-
-        String idSeleccionado;
-        Optional<Pelicula> peliculaEncontrada;
-
-        while (true) {
-            System.out.println("Ingrese el ID de la película de la cual desea comprar boletos: ");
-            idSeleccionado = scanner.nextLine();
-
-            final String finalIdSeleccionado = idSeleccionado;
-            peliculaEncontrada = cine.listaPeliculas.stream()
-                    .filter(pelicula -> pelicula.getId().equals(finalIdSeleccionado))
-                    .findFirst();
-
-            if (peliculaEncontrada.isPresent()) {
-                break; // Salir del ciclo si se encuentra la película
-            } else {
-                System.out.println("Película no encontrada, intente de nuevo.");
-            }
-        }
-
-        i = 1;
-        System.out.println("Horarios disponibles de esta película:");
-        for (LocalTime hora : peliculaEncontrada.get().getHorario()) {
-            System.out.println(i + ". " + hora);
-            i++;
-        }
-        LocalTime horaSeleccionada;
-        ArrayList<LocalTime> horarios = peliculaEncontrada.get().getHorario();
-
-        while (true) {
-            System.out.print("\nHora deseada (número): ");
-            int opc = scanner.nextInt();
-            if (opc >= 1 && opc <= horarios.size()) {
-                horaSeleccionada = horarios.get(opc - 1);
-                break;
-            } else {
-                System.out.println("Tal hora no está disponible, intente de nuevo.");
-            }
-        }
-
-        this.mostrarIdListaSalas();
-        String idSala;
-        Optional<Sala> salaEncontrada;
-
-        while (true) {
-            System.out.println("Ingrese el ID de la sala a la que quiera comprar boletos: ");
-            idSala = scanner.nextLine();
-
-            final String finalIdSala = idSala;
-            salaEncontrada = cine.listaSalas.stream()
-                    .filter(sala -> sala.getId().equals(finalIdSala))
-                    .findFirst();
-
-            if (salaEncontrada.isPresent()) {
-                break;
-            } else {
-                System.out.println("Sala no encontrada, intente de nuevo.");
-            }
-        }
-        TipoPago pago = null;
-
-        while (pago == null) {
-            System.out.println("Seleccione su forma de pago:" +
-                    "1.Pago con tarjeta de crédito" +
-                    "2.Pago con tarjeta de débito" +
-                    "3.Pago en efectivo");
-            System.out.print("\nSelección: ");
-            int pagoE = scanner.nextInt();
-            switch (pagoE) {
-                case 1:
-                    pago = TipoPago.CREDITO;
-                    break;
-                case 2:
-                    pago = TipoPago.DEBITO;
-                    break;
-                case 3:
-                    pago = TipoPago.EFECTIVO;
-                    break;
-                default:
-                    System.out.println("Opción inválida, intente de nuevo.");
-            }
-        }
-
-        Compra compra = new Compra(idCompra, cliente, peliculaEncontrada.get(), horaSeleccionada, salaEncontrada.get(), pago);
-        cine.listaCompras.add(compra);
-        System.out.println("Compra realizada con éxito.");
-    }
 }

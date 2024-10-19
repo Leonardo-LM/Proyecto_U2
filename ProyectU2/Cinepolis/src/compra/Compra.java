@@ -44,6 +44,8 @@ public class Compra {
         return descuento;
     } //// (costo*descuento)/100
 
+
+
     //------------Getters y Setters-----------------
 
     public String getId() {
