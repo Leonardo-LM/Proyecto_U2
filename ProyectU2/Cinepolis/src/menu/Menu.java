@@ -22,8 +22,8 @@ import java.util.Scanner;
 public class Menu {
     private final Scanner scanner = new Scanner(System.in);
     private final Cine cine = new Cine();
+    private final Inventario inventario = new Inventario();
     public Sala sala;
-    Cine cineP = new Cine();
 
     public void login (){
 
