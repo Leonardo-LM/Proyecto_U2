@@ -13,10 +13,10 @@ import salas.Sala;
 import usuarios.Usuario;
 import usuarios.administrador.Administrador;
 import usuarios.cliente.Cliente;
+import usuarios.empleados.Empleado;
 import utils.Rol;
 import utils.TipoAsiento;
 
-import java.util.Optional;
 import java.util.Scanner;
 
 public class Menu {
@@ -78,12 +78,12 @@ public class Menu {
                     4.-Actualizar una pelicula
                     5.-Mostrar dulceria
                     6.-Registrar empleado
-                    6.-Agregar producto a dulceria
-                    7.-Eliminar producto de dulceria
-                    8.-Asignar pelicula a sala
-                    9.-Compra de un Boleto
-                    10.-Mostrar Boletos
-                    11.-Salir""");
+                    7.-Agregar producto a dulceria
+                    8.-Eliminar producto de dulceria
+                    9.-Asignar pelicula a sala
+                    10.-Compra de un Boleto
+                    11.-Mostrar Boletos
+                    12.-Salir""");
             System.out.print("Elija una opción: ");
             respuesta = scanner.nextInt();
 
@@ -113,6 +113,8 @@ public class Menu {
                     break;
                 case 6:
                     System.out.println("---Registrar empleado---");
+                    this.registrarEmpleado();
+
                     break;
                 case 7:
                     Inventario inventario = new Inventario();
@@ -158,39 +160,7 @@ public class Menu {
 
                     break;
                 case 9:
-                    boolean band8 = true;
-
-                    System.out.println("\n---Asignar pelicula a sala---");
-                    this.mostrarListaPeliculas();
-                    this.mostrarIdListaSalas();
-                    do{
-                        System.out.println("Ingrese el ID de la película para asignarla:");
-                        String idPeliculaSala = scanner.nextLine();
-                        System.out.println("Ingrese el ID de la sala para asignar la película: ");
-                        String idSala = scanner.nextLine();
-
-                        Optional<Sala> salaEncontrada = cine.listaSalas.stream().filter(
-                                sala -> sala.getId().equals(idSala)).findFirst();
-                        Optional<Pelicula> peliculaEncontrada = cine.listaPeliculas.stream().filter(
-                                peliculaE -> peliculaE.getId().equals(idPeliculaSala)).findFirst();
-
-                        if (salaEncontrada.isPresent() && peliculaEncontrada.isPresent()) {
-                            salaEncontrada.get().asignarPeliculaASala(peliculaEncontrada.get());
-                            System.out.println("Pelicula asignada correctamente");
-                            band8 = false;
-                        } else {
-                            if (!salaEncontrada.isPresent()) {
-                                System.out.println("Sala no encontrada.");
-                            }
-                            if (!peliculaEncontrada.isPresent()) {
-                                System.out.println("Película no encontrada.");
-                            }
-                            System.out.println("\n¿Volver a intentarlo? s/n");
-                            if (!scanner.nextLine().toLowerCase().equals("s")) {
-                                band8 = false;
-                            }
-                        }
-                    }while (band8);
+                    this.asignarPeliculaASala();
                     break;
                 case 10:
 
@@ -260,36 +230,6 @@ public class Menu {
             System.out.println("Id" + sala.getId());
         }
     }
-    public void mostrarMenuCliente(Cliente cliente) {
-        int respuesta = 0;
-
-        while (respuesta != 12) {
-            System.out.println("Buen dia " + cliente.nombre);
-            System.out.println("""
-                    1.-Mostrar cartelera
-                    2.-Mostrar dulceria
-                    3.-Elegir pelicula
-                    4.-Elegir asientos  """); /// metodo mostrarAsientos
-            switch (respuesta){
-                case 1:
-                    cineP.mostrarCartelera();
-                    break;
-
-                case 2:
-                    break;
-
-                case 3:
-                    break;
-
-                case 4:
-                    cineP.mostrarAsientos();
-                    System.out.println("¿Que asientos elige? ");
-                    String asientos = scanner.nextLine();
-                    sala.venderAsiento(asientos);
-                    break;
-            }
-        }
-    }
 
     public void registrarCliente() {
         String idCliente = cine.generarIdCliente();
@@ -327,6 +267,54 @@ public class Menu {
         cine.listaClientes.add(cliente);
 
         System.out.println("\n Cliente registrado correctamente ");
+    }
+
+    public void registrarEmpleado(){
+        String idEmpleado = cine.generarIdEmpleado();
+        System.out.println("---Registrar empleado---");
+        System.out.println("Ingresa el nombre del empleado: ");
+        String nombre = scanner.nextLine();
+        System.out.println("Ingresa el apellido del empleado: ");
+        String apellido = scanner.nextLine();
+        System.out.println("Ingresa el numero de telefono: ");
+        String telefono = scanner.nextLine();
+        System.out.println("Ingresa su contraseña: ");
+        String contrasenia = scanner.nextLine();
+        System.out.println("Ingresa su RFC: ");
+        String rfc = scanner.nextLine();
+
+        Empleado empleado = new Empleado(idEmpleado,nombre,apellido,telefono,contrasenia,rfc);
+        cine.listaEmpleados.add(empleado);
+    }
+
+    public void mostrarMenuCliente(Cliente cliente) {
+        int respuesta = 0;
+
+        while (respuesta != 12) {
+            System.out.println("Buen dia " + cliente.nombre);
+            System.out.println("""
+                    1.-Mostrar cartelera
+                    2.-Mostrar dulceria
+                    3.-Comprar boletas
+                    4.-Elegir asientos"""); // metodo mostrarAsientos
+            switch (respuesta){
+                case 1:
+                    cine.mostrarCartelera();
+                    break;
+                case 2:
+                    inventario.mostrarProductos();
+                    break;
+                case 3:
+                    System.out.println("Comprar boletos");
+                    break;
+                case 4:
+                    cine.mostrarAsientos();
+                    System.out.println("¿Que asientos elige? ");
+                    String asientos = scanner.nextLine();
+                    sala.venderAsiento(asientos);
+                    break;
+            }
+        }
     }
 
 }

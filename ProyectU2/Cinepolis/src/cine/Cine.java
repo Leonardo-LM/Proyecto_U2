@@ -7,6 +7,7 @@ import salas.Sala;
 import usuarios.Usuario;
 import usuarios.administrador.Administrador;
 import usuarios.cliente.Cliente;
+import usuarios.empleados.Empleado;
 import utils.EstadoAsiento;
 import utils.EstadoPelicula;
 import utils.Rol;
@@ -20,6 +21,7 @@ public class Cine {
     public ArrayList<Usuario> listaUsuarios = new ArrayList<>();
     public ArrayList<Administrador> listaAdministradores = new ArrayList<>();
     public ArrayList<Cliente> listaClientes = new ArrayList<>();
+    public ArrayList<Empleado> listaEmpleados = new ArrayList<>();
     public ArrayList<Pelicula> listaPeliculas = new ArrayList<>();
     public ArrayList<Sala> listaSalas = new ArrayList<>();
     private Random random = new Random();
