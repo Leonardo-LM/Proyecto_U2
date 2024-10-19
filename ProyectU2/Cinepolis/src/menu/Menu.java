@@ -17,6 +17,7 @@ import usuarios.empleados.Empleado;
 import utils.Rol;
 import utils.TipoAsiento;
 
+import java.util.Optional;
 import java.util.Scanner;
 
 public class Menu {
@@ -285,6 +286,42 @@ public class Menu {
 
         Empleado empleado = new Empleado(idEmpleado,nombre,apellido,telefono,contrasenia,rfc);
         cine.listaEmpleados.add(empleado);
+    }
+
+    public void asignarPeliculaASala(){
+        boolean band8 = true;
+
+        System.out.println("\n---Asignar pelicula a sala---");
+        this.mostrarListaPeliculas();
+        this.mostrarIdListaSalas();
+        do{
+            System.out.println("Ingrese el ID de la película para asignarla:");
+            String idPeliculaSala = scanner.nextLine();
+            System.out.println("Ingrese el ID de la sala para asignar la película: ");
+            String idSala = scanner.nextLine();
+
+            Optional<Sala> salaEncontrada = cine.listaSalas.stream().filter(
+                    sala -> sala.getId().equals(idSala)).findFirst();
+            Optional<Pelicula> peliculaEncontrada = cine.listaPeliculas.stream().filter(
+                    peliculaE -> peliculaE.getId().equals(idPeliculaSala)).findFirst();
+
+            if (salaEncontrada.isPresent() && peliculaEncontrada.isPresent()) {
+                salaEncontrada.get().asignarPeliculaASala(peliculaEncontrada.get());
+                System.out.println("Pelicula asignada correctamente");
+                band8 = false;
+            } else {
+                if (!salaEncontrada.isPresent()) {
+                    System.out.println("Sala no encontrada.");
+                }
+                if (!peliculaEncontrada.isPresent()) {
+                    System.out.println("Película no encontrada.");
+                }
+                System.out.println("\n¿Volver a intentarlo? s/n");
+                if (!scanner.nextLine().equalsIgnoreCase("s")) {
+                    band8 = false;
+                }
+            }
+        }while (band8);
     }
 
     public void mostrarMenuCliente(Cliente cliente) {

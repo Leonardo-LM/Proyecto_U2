@@ -1,5 +1,6 @@
 package cine;
 
+import compra.Compra;
 import compra.boleto.Boleto;
 import cartelera.Pelicula;
 import salas.Asiento;
@@ -24,6 +25,7 @@ public class Cine {
     public ArrayList<Empleado> listaEmpleados = new ArrayList<>();
     public ArrayList<Pelicula> listaPeliculas = new ArrayList<>();
     public ArrayList<Sala> listaSalas = new ArrayList<>();
+    public ArrayList<Compra> listaCompras = new ArrayList<>();
     private Random random = new Random();
     public Scanner scanner = new Scanner(System.in);
     //
@@ -68,6 +70,28 @@ public class Cine {
                 anoActual,mesActual,longitudClientes,numeroAleatorio);
 
         return id ; }
+
+    public String generarIdEmpleado(){  // ID que inicie con E - año actual - mes actual - listaEmpleados+1 - random 1/100000
+
+        LocalDate fecha = LocalDate.now();
+        int anoActual= fecha.getYear();
+        int mesActual= fecha.getMonthValue();
+        int longitudEmpleados = this.listaEmpleados.size() +1 ;
+        int numeroAleatorio= random.nextInt(10000);
+
+        return String.format("E-%d-%d-%d-%d",anoActual,mesActual,longitudEmpleados,numeroAleatorio);
+    }
+
+    public String generarIdCompra(){  // ID que inicie con E - año actual - mes actual - listaEmpleados+1 - random 1/100000
+
+        LocalDate fecha = LocalDate.now();
+        int anoActual= fecha.getYear();
+        int mesActual= fecha.getMonthValue();
+        int longitudListaCompras = this.listaCompras.size() +1 ;
+        int numeroAleatorio= random.nextInt(10000);
+
+        return String.format("VTA-%d-%d-%d-%d",anoActual,mesActual,longitudListaCompras,numeroAleatorio);
+    }
 
     //------------Métodos para C.R.U.D----------------
 
