@@ -1,4 +1,5 @@
 package compra.boleto;
+
 import cartelera.Pelicula;
 
 import java.time.LocalDateTime;
@@ -19,7 +20,7 @@ public class Boleto {
     private Pelicula pelicula;
     //public boolean tipoDescuento; quite de constructor para pruebas
 
-    public Boleto(String id, int noSala, LocalDateTime fechaHora, String nombrePelicula, String asiento, String tipoAsiento, String cliente, double precio) {
+    public Boleto(String id, int noSala, LocalDateTime fechaHora, String nombrePelicula, String asiento, String tipoAsiento, String cliente, double precio, List<String> articulosExtra) {
         this.id = id;
         this.noSala = noSala;
         this.fechaHora = fechaHora;
@@ -28,9 +29,11 @@ public class Boleto {
         this.tipoAsiento = tipoAsiento;
         this.cliente = cliente;
         this.precio = precio;
+        this.articulosExtra = articulosExtra;
 
     }
-    public Boleto(Pelicula pelicula, List<String> asientosSeleccionados, List<String> articulosExtra ) {
+
+    public Boleto(Pelicula pelicula, List<String> asientosSeleccionados, List<String> articulosExtra) {
         this.asientosSeleccionados = asientosSeleccionados;
         this.articulosExtra = articulosExtra;
         this.pelicula = pelicula;
@@ -101,15 +104,16 @@ public class Boleto {
     }
 
     public String mostrarInformacion() {
-        return   "Id: " + id +
+        return "Id: " + id +
                 ", No de sala: " + noSala +
-                ", Fecha y Hora: " + fechaHora+
-                ", nombre pelicula: " +nombrePelicula +
+                ", Fecha y Hora: " + fechaHora +
+                ", nombre pelicula: " + nombrePelicula +
                 ", Asiento: " + asiento +
                 ", Tipo Asiento: " + tipoAsiento +
                 ",cliente: " + cliente +
                 ", precio: " + precio;
     }
+
     public void mostrarBoleto() {
         System.out.println("========== BOLETO DE CINE ==========");
         System.out.println("Película: " + pelicula.getTitulo());

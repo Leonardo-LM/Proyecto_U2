@@ -27,14 +27,14 @@ public class Menu {
     private final Inventario inventario = new Inventario();
     public Sala sala;
 
-    public void login (){
+    public void login() {
 
-        int intesntosMax = 5, intentosUsuario=0;
+        int intesntosMax = 5, intentosUsuario = 0;
 
         //Para empezar con el menu del admin
         this.mostrarMenuAdmin(cine.administradorPredeterminado);
 
-        while(intentosUsuario<intesntosMax){
+        while (intentosUsuario < intesntosMax) {
             System.out.print("\n--------Bienvenido/a--------\n");
             System.out.println("---Inicia sesión para continuar---");
 
@@ -47,31 +47,30 @@ public class Menu {
 
             Usuario usuarioEnSesion = cine.validarInicioSesion(usuario, contaseña);
 
-            if(usuarioEnSesion instanceof Usuario){
+            if (usuarioEnSesion instanceof Usuario) {
 
-                if(usuarioEnSesion.getRol() == Rol.CLIENTE){
+                if (usuarioEnSesion.getRol() == Rol.CLIENTE) {
                     Cliente clienteEnSesion = (Cliente) usuarioEnSesion;
                     this.mostrarMenuCliente(clienteEnSesion);
-                    intentosUsuario = 0; }
-
-                else if (usuarioEnSesion.getRol() == Rol.EMPLEADO){
+                    intentosUsuario = 0;
+                } else if (usuarioEnSesion.getRol() == Rol.EMPLEADO) {
                     Empleado empleadoEnSesion = (Empleado) usuarioEnSesion;
-                }else{
+                } else {
                     Administrador adminEnSesion = (Administrador) usuarioEnSesion;
                     this.mostrarMenuAdmin(adminEnSesion);
                     intentosUsuario = 0;
                 }
             } else {
-                 intentosUsuario = mostrarErrorInicioSesion(intentosUsuario);
+                intentosUsuario = mostrarErrorInicioSesion(intentosUsuario);
 
             }
         }
         System.out.println("Intentos maximos permitidos ");
     }
 
-    private int mostrarErrorInicioSesion(int intentosUsuario){
+    private int mostrarErrorInicioSesion(int intentosUsuario) {
         System.out.println("Usuario o contraseña incorrectos, intenta de nuevo");
-        return intentosUsuario+1;
+        return intentosUsuario + 1;
     }
 
     //-------------- Métodos para mostrar -----------------
@@ -97,7 +96,8 @@ public class Menu {
                     11.-Mostrar Boletos
                     12.-Mostrar Clientes
                     13.-Mostrar Peliculas
-                    14.-Salir""");
+                    14.-Compra de productos
+                    15.-Salir""");
             System.out.print("Elija una opción: ");
             respuesta = scanner.nextInt();
 
@@ -125,6 +125,7 @@ public class Menu {
                     break;
                 case 5:
                     System.out.println("---Dulceria---");
+                    inventario.mostrarProductos();
                     break;
                 case 6:
                     System.out.println("---Registrar empleado---");
@@ -187,22 +188,22 @@ public class Menu {
                     cine.mostrarClientesTodos();
                     System.out.println("Ingresa el Id del cliente");
                     scanner.nextLine();
-                    String clienteId= scanner.nextLine();
+                    String clienteId = scanner.nextLine();
                     System.out.println("ID introducido: '" + clienteId + "'");
-                    String nombreCliente=cine.buscarNombreClientePorId(clienteId);
+                    String nombreCliente = cine.buscarNombreClientePorId(clienteId);
                     System.out.println(nombreCliente);
-                    int MesCliente=cine.MesCumpleañosParaVerSiHayDescuento(clienteId);//este al VIP O PREMIUM
+                    int MesCliente = cine.MesCumpleañosParaVerSiHayDescuento(clienteId);//este al VIP O PREMIUM
 
 
                     this.mostrarListaPeliculas();
                     System.out.println("Ingresa el Id de la pelicula que desea el cliente");
-                    String peliculaId= scanner.nextLine();
+                    String peliculaId = scanner.nextLine();
                     System.out.println("ID introducido: '" + peliculaId + "'");
-                    String tituloPelicula=cine.buscarTituloPeliculaPorId(peliculaId);
+                    String tituloPelicula = cine.buscarTituloPeliculaPorId(peliculaId);
 
 
                     System.out.println("Ingresa el Número de la sala que corresponde");
-                    int NoSala= scanner.nextInt();
+                    int NoSala = scanner.nextInt();
 
                     cine.mostrarAsientos();
                     System.out.print("Ingresa el ID del asiento a reservar (ejemplo: A1): ");
@@ -212,29 +213,33 @@ public class Menu {
                     System.out.println(resultado);
 
                     System.out.println("Ingresa tipo de asiento escribe PREMIUM O VIP");
-                    String tipo= scanner.nextLine();
-                    double x=100;
+                    String tipo = scanner.nextLine();
+                    double x = 100;
                     TipoAsiento tipoAsiento;//=TipoAsiento.Normal;
-                    if(tipo.equals("PREMIUM")) {
-                        if(MesCliente == mesActual){
-                        tipoAsiento= TipoAsiento.PREMIUM;
-                        x=400*0.6;
-                        }else{
-                        x=400;
+                    if (tipo.equals("PREMIUM")) {
+                        if (MesCliente == mesActual) {
+                            tipoAsiento = TipoAsiento.PREMIUM;
+                            x = 400 * 0.6;
+                        } else {
+                            x = 400;
                         }
-                    } else if(tipo.equals("VIP")) {
-                        if(MesCliente == mesActual){
-                            tipoAsiento= TipoAsiento.VIP;
-                            x=200*0.35;
-                        }else{
-                            x=200;
+                    } else if (tipo.equals("VIP")) {
+                        if (MesCliente == mesActual) {
+                            tipoAsiento = TipoAsiento.VIP;
+                            x = 200 * 0.35;
+                        } else {
+                            x = 200;
                         }
                     } else {
                         System.out.println("Palabra incorrecta");
                     }
 
-                    String idBoleto= cine.generarIdBoleto();//generamos id del compra.boleto
-                    Boleto boleto =new Boleto(idBoleto,NoSala, LocalDateTime.now(),tituloPelicula,resultado,tipo,nombreCliente,x);
+                    inventario = new Inventario();
+                    inventario.mostrarProductos();
+                    List<String> articulosExtra = cine.seleccionarArticulos();
+
+                    String idBoleto = cine.generarIdBoleto();//generamos id del compra.boleto
+                    Boleto boleto = new Boleto(idBoleto, NoSala, LocalDateTime.now(), tituloPelicula, resultado, tipo, nombreCliente, x, articulosExtra);
                     cine.registrarBoleto(boleto);
                     System.out.println(cine.listaBoletos.get(0));
                     boleto.mostrarInformacion();
@@ -261,14 +266,14 @@ public class Menu {
 
     //---------Métodos para mostrar datos-------------
 
-    public void mostrarListaPeliculas(){
-        for (Pelicula pelicula : cine.listaPeliculas){
-            System.out.println("Titulo: "+pelicula.titulo + "Id: " + pelicula.id);
+    public void mostrarListaPeliculas() {
+        for (Pelicula pelicula : cine.listaPeliculas) {
+            System.out.println("Titulo: " + pelicula.titulo + "Id: " + pelicula.id);
         }
     }
 
-    public void mostrarIdListaSalas(){
-        for (Sala sala : cine.listaSalas){
+    public void mostrarIdListaSalas() {
+        for (Sala sala : cine.listaSalas) {
             System.out.println("Id" + sala.getId());
         }
     }
@@ -301,18 +306,18 @@ public class Menu {
 
         System.out.println("Ingrese la curp del cliente: ");
         String curp = scanner.nextLine();
-         scanner.nextLine();
+        scanner.nextLine();
         System.out.println("Ingresa el correo electronico: ");
         String correo = scanner.nextLine();
         LocalDate fechaNacimiento = LocalDate.of(añoNacimiento, mesNacimiento, diaNacimiento);
 
-        Cliente cliente = new Cliente(idCliente,nombre,apellido,telefono,contraseña, fechaNacimiento,curp,correo );
+        Cliente cliente = new Cliente(idCliente, nombre, apellido, telefono, contraseña, fechaNacimiento, curp, correo);
         //cine.listaClientes.add(cliente);
         cine.registrarCliente(cliente);
         System.out.println("\n Cliente registrado correctamente ");
     }
 
-    public void registrarEmpleado(){
+    public void registrarEmpleado() {
         String idEmpleado = cine.generarIdEmpleado();
         System.out.println("---Registrar empleado---");
         scanner.nextLine();
@@ -331,17 +336,17 @@ public class Menu {
         System.out.println("Ingresa su RFC: ");
         String rfc = scanner.nextLine();
 
-        Empleado empleado = new Empleado(idEmpleado,nombre,apellido,telefono,contrasenia,rfc);
+        Empleado empleado = new Empleado(idEmpleado, nombre, apellido, telefono, contrasenia, rfc);
         cine.listaEmpleados.add(empleado);
     }
 
-    public void asignarPeliculaASala(){
+    public void asignarPeliculaASala() {
         boolean band8 = true;
 
         System.out.println("\n---Asignar pelicula a sala---");
         this.mostrarListaPeliculas();
         this.mostrarIdListaSalas();
-        do{
+        do {
             scanner.nextLine();
             System.out.println("Ingrese el ID de la película para asignarla:");
             String idPeliculaSala = scanner.nextLine();
@@ -370,21 +375,22 @@ public class Menu {
                     band8 = false;
                 }
             }
-        }while (band8);
+        } while (band8);
     }
 
     public void mostrarMenuCliente(Cliente cliente) {
         int respuesta = 0;
 
-        while (respuesta != 4) {
+        while (respuesta != 5) {
             System.out.println("Buen dia " + cliente.nombre);
             System.out.println("""
                     1.-Mostrar cartelera
                     2.-Mostrar dulceria
-                    3.-Comprar boletas
-                    4.-Elegir asientos""");// metodo mostrarAsientos
+                    3.-Comprar boletos
+                    4.-Elegir asientos
+                    5.-Salir""");// metodo mostrarAsientos
             respuesta = scanner.nextInt();
-            switch (respuesta){
+            switch (respuesta) {
                 case 1:
                     cine.mostrarCartelera();
                     break;
@@ -410,6 +416,8 @@ public class Menu {
                     String asientos = scanner.nextLine();
                     sala.venderAsiento(asientos);
                     break;
+                case 5:
+                    return;
             }
         }
     }

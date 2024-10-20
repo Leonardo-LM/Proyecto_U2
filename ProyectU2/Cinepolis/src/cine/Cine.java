@@ -3,6 +3,7 @@ package cine;
 import compra.Compra;
 import compra.boleto.Boleto;
 import cartelera.Pelicula;
+import dulceria.Inventario;
 import salas.Asiento;
 import salas.Sala;
 import usuarios.Usuario;
@@ -32,7 +33,7 @@ public class Cine {
     public ArrayList<Asiento> listaAsientos = new ArrayList<>();
     public ArrayList<Boleto> listaBoletos = new ArrayList<>();
 
-//mod para q funcionara
+    //mod para q funcionara
     public Cine() {
         this.administradorPredeterminado = new Administrador("A-1", "Admin", "1", "222", "ajcrrf", Rol.ADMINISTRADOR);
         this.listaAdministradores.add(this.administradorPredeterminado);
@@ -59,40 +60,41 @@ public class Cine {
         return String.format("P-%d-%d", longitudPeliculaMasUno, numeroAleatorio);
     }
 
-    public String generarIdCliente(){  // ID que inicie con C - año actual - mes actual - listaClientes+1 - random 1/100000
+    public String generarIdCliente() {  // ID que inicie con C - año actual - mes actual - listaClientes+1 - random 1/100000
         Random random = new Random();
 
         LocalDate fecha = LocalDate.now();
-        int anoActual= fecha.getYear();
-        int mesActual= fecha.getMonthValue();
-        int longitudClientes = this.listaClientes.size() +1 ;
-        int numeroAleatorio= random.nextInt(10000);
+        int anoActual = fecha.getYear();
+        int mesActual = fecha.getMonthValue();
+        int longitudClientes = this.listaClientes.size() + 1;
+        int numeroAleatorio = random.nextInt(10000);
 
         String id = String.format("C%d%d%d%d",
-                anoActual,mesActual,longitudClientes,numeroAleatorio);
+                anoActual, mesActual, longitudClientes, numeroAleatorio);
 
-        return id ; }
-
-    public String generarIdEmpleado(){  // ID que inicie con E - año actual - mes actual - listaEmpleados+1 - random 1/100000
-
-        LocalDate fecha = LocalDate.now();
-        int anoActual= fecha.getYear();
-        int mesActual= fecha.getMonthValue();
-        int longitudEmpleados = this.listaEmpleados.size() +1 ;
-        int numeroAleatorio= random.nextInt(10000);
-
-        return String.format("E-%d-%d-%d-%d",anoActual,mesActual,longitudEmpleados,numeroAleatorio);
+        return id;
     }
 
-    public String generarIdCompra(){  // ID que inicie con E - año actual - mes actual - listaEmpleados+1 - random 1/100000
+    public String generarIdEmpleado() {  // ID que inicie con E - año actual - mes actual - listaEmpleados+1 - random 1/100000
 
         LocalDate fecha = LocalDate.now();
-        int anoActual= fecha.getYear();
-        int mesActual= fecha.getMonthValue();
-        int longitudListaCompras = this.listaCompras.size() +1 ;
-        int numeroAleatorio= random.nextInt(10000);
+        int anoActual = fecha.getYear();
+        int mesActual = fecha.getMonthValue();
+        int longitudEmpleados = this.listaEmpleados.size() + 1;
+        int numeroAleatorio = random.nextInt(10000);
 
-        return String.format("VTA-%d-%d-%d-%d",anoActual,mesActual,longitudListaCompras,numeroAleatorio);
+        return String.format("E-%d-%d-%d-%d", anoActual, mesActual, longitudEmpleados, numeroAleatorio);
+    }
+
+    public String generarIdCompra() {  // ID que inicie con E - año actual - mes actual - listaEmpleados+1 - random 1/100000
+
+        LocalDate fecha = LocalDate.now();
+        int anoActual = fecha.getYear();
+        int mesActual = fecha.getMonthValue();
+        int longitudListaCompras = this.listaCompras.size() + 1;
+        int numeroAleatorio = random.nextInt(10000);
+
+        return String.format("VTA-%d-%d-%d-%d", anoActual, mesActual, longitudListaCompras, numeroAleatorio);
     }
 
     //------------Métodos para C.R.U.D----------------
@@ -158,7 +160,7 @@ public class Cine {
             if (!r.toLowerCase().equals("s")) {
                 continuar = false;
             }
-        }while(continuar);
+        } while (continuar);
     }
 
     public void actualizarDatosPelicula(String idPelicula) {
@@ -261,7 +263,7 @@ public class Cine {
 
     //--------------Métodos para mostrar datos----------------
 
-    public void mostrarAsientos () {
+    public void mostrarAsientos() {
 
         //String mostrarAsientos [] [];
         String butacas[] = {"A", "B", "C", "D", "E", "F"};
@@ -279,13 +281,13 @@ public class Cine {
 
         System.out.println("\t\tPANTALLA\n========================");
 
-            for (fila = 0; fila < filas; fila++) {
-                for (columna = 0; columna < columnas; columna++) {
-                    System.out.print (mostrarAsientos[fila][columna] + "\t");
+        for (fila = 0; fila < filas; fila++) {
+            for (columna = 0; columna < columnas; columna++) {
+                System.out.print(mostrarAsientos[fila][columna] + "\t");
 
-                }
-                System.out.println("\t");
             }
+            System.out.println("\t");
+        }
     }
 
     public void mostrarCartelera() {
@@ -306,18 +308,18 @@ public class Cine {
         }
     }
 
-    public String generarIdBoleto(){
+    public String generarIdBoleto() {
         Random random = new Random();
-        LocalDate fecha= LocalDate.now();
-        int anoActual=fecha.getYear();
-        int mesActual= fecha.getMonthValue();
-        int numeroAleatorio= random.nextInt(10,1000);
-        String id=String.format("T%d%d%d",anoActual,mesActual,numeroAleatorio);
+        LocalDate fecha = LocalDate.now();
+        int anoActual = fecha.getYear();
+        int mesActual = fecha.getMonthValue();
+        int numeroAleatorio = random.nextInt(10, 1000);
+        String id = String.format("T%d%d%d", anoActual, mesActual, numeroAleatorio);
         return id;
     }
 
     public String buscarNombreClientePorId(String id) {
-        for ( Cliente cliente : listaClientes) {
+        for (Cliente cliente : listaClientes) {
             if (cliente.getId().equals(id)) {
                 return cliente.getNombre(); //modf
             }
@@ -326,9 +328,9 @@ public class Cine {
     }
 
     public String buscarTituloPeliculaPorId(String id) {
-        for ( Pelicula pelicula : listaPeliculas) {
+        for (Pelicula pelicula : listaPeliculas) {
             if (pelicula.getId().equals(id)) {
-               return pelicula.getTitulo();
+                return pelicula.getTitulo();
             }
         }
         return "El id es incorrecto";
@@ -337,7 +339,8 @@ public class Cine {
 
     public final int FILAS = 6;
     public final int COLUMNAS = 6;
- public ArrayList<String>asientos;
+    public ArrayList<String> asientos;
+
     public void inicializar() {
         asientos = new ArrayList<>();
         for (int i = 0; i < FILAS; i++) {
@@ -346,15 +349,17 @@ public class Cine {
             }
         }
     }
+
     public int obtenerIndicesAsiento(String idAsiento) {
         return asientos.indexOf(idAsiento);
     }
+
     public boolean estaReservado(int indice) {
         return indice >= 0 && asientos.get(indice).equals("X"); // Verifica si el asiento está reservado
     }
 
     public String reservarAsiento(String idAsiento) {
-        int indice =obtenerIndicesAsiento(idAsiento);
+        int indice = obtenerIndicesAsiento(idAsiento);
 
         if (indice == -1) {
             return "El asiento " + idAsiento + " no existe.";
@@ -367,37 +372,41 @@ public class Cine {
         }
     }
 
-    public void registrarBoleto(Boleto boleto){
+    public void registrarBoleto(Boleto boleto) {
         this.listaBoletos.add(boleto);
     }
 
-    public void mostrarBoletosTodos(){
+    public void mostrarBoletosTodos() {
         System.out.println("\n BOLETOS VENDIDOS");
-        for(Boleto boleto : this.listaBoletos){
+        for (Boleto boleto : this.listaBoletos) {
             System.out.println(boleto.mostrarInformacion());
         }
     }
-    public void mostrarClientesTodos(){
+
+    public void mostrarClientesTodos() {
         System.out.println("\n CLIENTES REGISTRADOS");
-        for(Cliente  cliente: this.listaClientes){
+        for (Cliente cliente : this.listaClientes) {
             System.out.println(cliente.mostrarInformacionCliente());
         }
     }
-    public void registrarCliente(Cliente cliente){
+
+    public void registrarCliente(Cliente cliente) {
         this.listaClientes.add(cliente);
     }
-    public void mostrarPeliculasTodas(){
+
+    public void mostrarPeliculasTodas() {
         System.out.println("\n PELICULAS REGISTRADAS");
-        for(Pelicula pelicula: this.listaPeliculas){
+        for (Pelicula pelicula : this.listaPeliculas) {
             System.out.println(pelicula.mostrarInformacionpelicula());
         }
     }
-    public void registrarPelicula1(Pelicula pelicula){
+
+    public void registrarPelicula1(Pelicula pelicula) {
         this.listaPeliculas.add(pelicula);
     }
 
     public int MesCumpleañosParaVerSiHayDescuento(String id) {
-        for ( Cliente cliente : listaClientes) {
+        for (Cliente cliente : listaClientes) {
             if (cliente.getId().equals(id)) {
                 int mes = cliente.getFechaNacimiento().getMonthValue();
                 return mes;
@@ -412,6 +421,7 @@ public class Cine {
 
         return listaPeliculas.get(opcion - 1);
     }
+
     public List<String> seleccionarAsientos() {
         Scanner scanner = new Scanner(System.in);
         List<String> asientosSeleccionados = new ArrayList<>();
