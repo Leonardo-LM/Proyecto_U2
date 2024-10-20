@@ -37,9 +37,9 @@ public class Menu {
             System.out.print("\n--------Bienvenido/a--------\n");
             System.out.println("---Inicia sesión para continuar---");
 
-            scanner.nextLine();
             System.out.println("Ingresa tu usuario: ");
             String usuario = scanner.nextLine();
+            scanner.nextLine();
 
             System.out.println("Ingresa tu contaseña : ");
             String contaseña = scanner.nextLine();
@@ -110,6 +110,7 @@ public class Menu {
                 case 3:
                     System.out.println("---Eliminar una pelicula---");
                     this.mostrarListaPeliculas();
+                    scanner.nextLine();
                     System.out.println("Ingrese el id de la pelicula que desea eliminar: ");
                     String idPeliculaE = scanner.nextLine();
                     cine.eliminarPelicula(idPeliculaE);
@@ -137,9 +138,11 @@ public class Menu {
                     while (respuesta != 2) {
                         System.out.println("---Registrar un producto---");
 
+
                         System.out.println("Nombre del producto:");
                         String nombreProducto = scanner.nextLine();
 
+                        scanner.nextLine();
                         System.out.println("Precio del producto:");
                         Double precioProducto = scanner.nextDouble();
 
@@ -166,6 +169,7 @@ public class Menu {
                     inventario = new Inventario();
                     System.out.println("\n---Eliminar un producto---");
 
+                    scanner.nextLine();
                     System.out.println("Ingresa el nombre del producto:");
                     String nombreProducto = scanner.nextLine();
 
@@ -179,6 +183,7 @@ public class Menu {
 
                     System.out.println("\n---Compra de un boleto---");
                     int mesActual = LocalDate.now().getMonthValue();//para premium o vip
+                    cine.mostrarClientesTodos();
                     System.out.println("Ingresa el Id del cliente");
                     scanner.nextLine();
                     String clienteId= scanner.nextLine();
@@ -188,12 +193,14 @@ public class Menu {
                     int MesCliente=cine.MesCumpleañosParaVerSiHayDescuento(clienteId);//este al VIP O PREMIUM
 
 
+                    this.mostrarListaPeliculas();
                     System.out.println("Ingresa el Id de la pelicula que desea el cliente");
                     String peliculaId= scanner.nextLine();
                     System.out.println("ID introducido: '" + peliculaId + "'");
                     String tituloPelicula=cine.buscarTituloPeliculaPorId(peliculaId);
 
-                    System.out.println("Ingresa el No de la sala que corresponde");
+
+                    System.out.println("Ingresa el Número de la sala que corresponde");
                     int NoSala= scanner.nextInt();
 
                     cine.mostrarAsientos();
@@ -232,7 +239,7 @@ public class Menu {
                     boleto.mostrarInformacion();
                     break;
                 case 11:
-                    System.out.println("\n---Compra de un compra.boleto---");
+                    System.out.println("\n---Compra de un boleto---");
                     cine.mostrarBoletosTodos();
                     break;
                 case 12:
@@ -307,14 +314,19 @@ public class Menu {
     public void registrarEmpleado(){
         String idEmpleado = cine.generarIdEmpleado();
         System.out.println("---Registrar empleado---");
+        scanner.nextLine();
         System.out.println("Ingresa el nombre del empleado: ");
         String nombre = scanner.nextLine();
+        scanner.nextLine();
         System.out.println("Ingresa el apellido del empleado: ");
         String apellido = scanner.nextLine();
+        scanner.nextLine();
         System.out.println("Ingresa el numero de telefono: ");
         String telefono = scanner.nextLine();
+        scanner.nextLine();
         System.out.println("Ingresa su contraseña: ");
         String contrasenia = scanner.nextLine();
+        scanner.nextLine();
         System.out.println("Ingresa su RFC: ");
         String rfc = scanner.nextLine();
 
@@ -329,8 +341,10 @@ public class Menu {
         this.mostrarListaPeliculas();
         this.mostrarIdListaSalas();
         do{
+            scanner.nextLine();
             System.out.println("Ingrese el ID de la película para asignarla:");
             String idPeliculaSala = scanner.nextLine();
+            scanner.nextLine();
             System.out.println("Ingrese el ID de la sala para asignar la película: ");
             String idSala = scanner.nextLine();
 
@@ -361,13 +375,14 @@ public class Menu {
     public void mostrarMenuCliente(Cliente cliente) {
         int respuesta = 0;
 
-        while (respuesta != 12) {
+        while (respuesta != 4) {
             System.out.println("Buen dia " + cliente.nombre);
             System.out.println("""
                     1.-Mostrar cartelera
                     2.-Mostrar dulceria
                     3.-Comprar boletas
-                    4.-Elegir asientos"""); // metodo mostrarAsientos
+                    4.-Elegir asientos""");// metodo mostrarAsientos
+            respuesta = scanner.nextInt();
             switch (respuesta){
                 case 1:
                     cine.mostrarCartelera();

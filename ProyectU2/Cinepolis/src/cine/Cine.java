@@ -168,6 +168,7 @@ public class Cine {
         if (peliculaEncontrada.isPresent()) {
             System.out.println("--Actualice los datos--");
             System.out.println("Titulo actual: " + peliculaEncontrada.get().getTitulo());
+            scanner.nextLine();
             System.out.println("Nuevo Titulo: ");
             String nuevoTitulo = scanner.nextLine();
 
