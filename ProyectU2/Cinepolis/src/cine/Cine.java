@@ -30,14 +30,18 @@ public class Cine {
     private Random random = new Random();
     public Scanner scanner = new Scanner(System.in);
     public Administrador administradorPredeterminado;
+    public Cliente clientePredeterminado;
+    LocalDate date = LocalDate.now();
     public ArrayList<Boleto> listaBoletos = new ArrayList<>();
 
     //mod para q funcionara
     public Cine() {
         this.administradorPredeterminado = new Administrador("A-1", "Admin", "1", "222", "ajcrrf", Rol.ADMINISTRADOR);
+        this.clientePredeterminado = new Cliente("1","Cliente1", "1", "1","1" ,date, "33", "33");
         this.listaAdministradores.add(this.administradorPredeterminado);
         this.listaUsuarios.add(this.administradorPredeterminado);
-
+        this.listaClientes.add(this.clientePredeterminado);
+        this.listaUsuarios.add(this.clientePredeterminado);
     }
 
     //------------- Métodos de Agregación -----------------
@@ -245,9 +249,9 @@ public class Cine {
 
     //----------- Validaciones -----------
 
-    public Usuario validarInicioSesion(String idUsuario, String contraseña) {
+    public Usuario validarInicioSesion(String idUsuario, String contrasena) {
         for (Usuario usuario : this.listaUsuarios) {
-            if (usuario.getId().equals(idUsuario) && usuario.getContrasenia().equals(contraseña)) {
+            if (usuario.getId().equals(idUsuario) && usuario.getContrasenia().equals(contrasena)) {
                 return usuario;
             }
 
@@ -382,10 +386,12 @@ public class Cine {
         for (Cliente cliente : this.listaClientes) {
             System.out.println(cliente.mostrarInformacionCliente());
         }
+        System.out.println();
     }
 
     public void registrarCliente(Cliente cliente) {
         this.listaClientes.add(cliente);
+        this.listaUsuarios.add(cliente);
     }
 
     public void mostrarPeliculasTodas() {

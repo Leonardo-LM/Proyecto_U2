@@ -26,7 +26,8 @@ public class Cliente extends Usuario {
                 ", apellidos='" + apellido + '\'' +
                 ", curp='" + CURP + '\'' +
                 ", fechaNacimiento='" + fechaNacimiento + '\'' +
-                ", direccion='" + correoE + '\'' +
+                ", Correo Electronico='" + correoE + '\'' +
+                ", Contra ='" + contrasenia + '\'' +
                 '}';
     }
 

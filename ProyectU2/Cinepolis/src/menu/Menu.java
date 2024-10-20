@@ -38,9 +38,9 @@ public class Menu {
             System.out.print("\n--------Bienvenido/a--------\n");
             System.out.println("---Inicia sesión para continuar---");
 
+            scanner.nextLine();
             System.out.println("Ingresa tu usuario: ");
             String usuario = scanner.nextLine();
-            scanner.nextLine();
 
             System.out.println("Ingresa tu contaseña : ");
             String contaseña = scanner.nextLine();
@@ -265,7 +265,6 @@ public class Menu {
                     break;
             }
         }
-        scanner.close();
     }
 
     //---------Métodos para mostrar datos-------------
@@ -315,9 +314,9 @@ public class Menu {
         System.out.println("Ingresa el día: ");
         int diaNacimiento = scanner.nextInt();
 
+        scanner.nextLine();
         System.out.println("Ingrese la curp del cliente: ");
         String curp = scanner.nextLine();
-        scanner.nextLine();
         System.out.println("Ingresa el correo electronico: ");
         String correo = scanner.nextLine();
         LocalDate fechaNacimiento = LocalDate.of(añoNacimiento, mesNacimiento, diaNacimiento);
