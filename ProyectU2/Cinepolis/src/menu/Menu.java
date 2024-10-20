@@ -184,6 +184,7 @@ public class Menu {
 
                     System.out.println("\n---Compra de un boleto---");
                     int mesActual = LocalDate.now().getMonthValue();//para premium o vip
+
                     cine.mostrarClientesTodos();
                     System.out.println("Ingresa el Id del cliente");
                     scanner.nextLine();
@@ -192,8 +193,6 @@ public class Menu {
                     String nombreCliente=cine.buscarNombreClientePorId(clienteId);
                     System.out.println(nombreCliente);
                     int MesCliente=cine.MesCumpleañosParaVerSiHayDescuento(clienteId);//este al VIP O PREMIUM
-
-
                     this.mostrarListaPeliculas();
                     System.out.println("Ingresa el Id de la pelicula que desea el cliente");
                     String peliculaId= scanner.nextLine();
@@ -201,7 +200,7 @@ public class Menu {
                     String tituloPelicula=cine.buscarTituloPeliculaPorId(peliculaId);
 
 
-                    System.out.println("Ingresa el Número de la sala que corresponde");
+                    System.out.println("Ingresa el Número de la sala que corresponde tenemos sala ");
                     int NoSala= scanner.nextInt();
 
                     cine.mostrarAsientos();
@@ -232,7 +231,7 @@ public class Menu {
                     } else {
                         System.out.println("Palabra incorrecta");
                     }
-
+                    cine.MetodoPago(x,clienteId);
                     String idBoleto= cine.generarIdBoleto();//generamos id del compra.boleto
                     Boleto boleto =new Boleto(idBoleto,NoSala, LocalDateTime.now(),tituloPelicula,resultado,tipo,nombreCliente,x);
                     cine.registrarBoleto(boleto);
@@ -393,7 +392,9 @@ public class Menu {
                     break;
                 case 3:
                     System.out.println("Comprar boletos");
-
+                    cine.registrarPelicula();
+                    Producto producto =new Producto("refresco",200.00); // ---PUSE ESTO PARA PROBAR METODO
+                    inventario.registrarProducto(producto);
                     cine.mostrarCartelera();
                     Pelicula peliculaSeleccionada = cine.seleccionarPelicula();
                     cine.mostrarAsientos();
@@ -401,8 +402,48 @@ public class Menu {
                     inventario.mostrarProductos();
                     List<String> articulosExtra = cine.seleccionarArticulos();
 
-                    Boleto boleto = new Boleto(peliculaSeleccionada, asientosSeleccionados, articulosExtra);
-                    boleto.mostrarBoleto();
+                    ///AÑADI PARA PREMIUM VIP METODO PAGO Y SALA
+                    System.out.println("Ingresa tipo de asiento escribe PREMIUM O VIP cualquier otra cosa sera NORMAL");
+                    scanner.nextLine();
+                    String tipo= scanner.nextLine();
+                    double x=100;
+                    int mesActual = LocalDate.now().getMonthValue();
+                    String clienteId = cliente.getId();
+                    String correo=cliente.getCorreoE();
+                    int MesCliente=cine.MesCumpleañosParaVerSiHayDescuento(clienteId);
+                    TipoAsiento tipoAsiento;//=TipoAsiento.Normal;
+                    if(tipo.equalsIgnoreCase("PREMIUM")) {
+                        if(MesCliente == mesActual){
+                            tipoAsiento= TipoAsiento.PREMIUM;
+                            x=400*0.6;
+                        }else{
+                            x=400;
+                        }
+                    } else if(tipo.equalsIgnoreCase("VIP")) {
+                        if(MesCliente == mesActual){
+                            tipoAsiento= TipoAsiento.VIP;
+                            x=200*0.35;
+                        }else{
+                            x=200;
+                        }
+
+                    }
+                    boolean continuar = true;
+                    while (continuar) {
+                    System.out.println("Se comprara desde Pay Pal con el correo:"+correo);
+                    System.out.println("El precio de:"+x);
+                    System.out.println("Escriba 1 para continuar 2 para cancelar");
+                    int price= scanner.nextInt();
+                    if(price==1){
+                        Boleto boleto = new Boleto(peliculaSeleccionada, asientosSeleccionados, articulosExtra,x);
+                        boleto.mostrarBoleto();
+                        continuar=false;
+                    }else {
+                        System.out.println("Se cancelo la compra");
+                        continuar=false;
+                    }
+                    }
+
                     break;
                 case 4:
                     cine.mostrarAsientos();

@@ -418,7 +418,7 @@ public class Cine {
         String asiento;
 
         System.out.println("Ingresa los asientos que deseas (ej. A1, B3) y escribe 'fin' para terminar:");
-
+        scanner.nextLine();
         while (true) {
             asiento = scanner.nextLine();
             if (asiento.equalsIgnoreCase("fin")) {
@@ -429,6 +429,8 @@ public class Cine {
 
         return asientosSeleccionados;
     }
+
+
 
     public List<String> seleccionarArticulos() {
         Scanner scanner = new Scanner(System.in);
@@ -445,5 +447,59 @@ public class Cine {
         }
         return articulosExtra;
     }
+
+    public void MetodoPago(double x, String id) {
+        System.out.println("Deseas pagar en 1: efectivo o con 2: PAYPAL");
+        int opcion = scanner.nextInt();
+        scanner.nextLine(); // Capturar el salto de línea después de nextInt()
+
+        switch (opcion) {
+            case 1:
+                // Pago en efectivo
+                System.out.println("Has elegido pagar en efectivo. El monto a pagar es: $" + x);
+                int y = 2;
+                while (y == 2) {
+                    System.out.println("¿Usuario ya pagó? 1: Sí, 2: No");
+                    y = scanner.nextInt();
+                    if (y == 1) {
+                        System.out.println("Pago realizado con éxito.");
+                    } else if (y == 2) {
+                        System.out.println("Ingrese el pago a caja.");
+                    } else {
+                        System.out.println("Opción inválida. Por favor, elige 1 o 2.");
+                    }
+                }
+                break;
+
+            case 2:
+                // Pago con PayPal
+                boolean pagoExitoso = false;
+                System.out.println("Has elegido pagar con PAYPAL. El monto a pagar es: $" + x);
+
+                for (Cliente cliente : listaClientes) {
+                    if (cliente.getId().equals(id)) {
+                        String correo = cliente.getCorreoE();
+                        while (!pagoExitoso) {
+                        System.out.print("Ingresa la contraseña de tu correo (" + correo + "): ");
+                        String contrasenia = scanner.nextLine(); // Cambié a nextLine para capturar la contraseña correctamente
+                        String usercontra = cliente.getContrasenia();
+
+                        if (contrasenia.equals(usercontra)) {
+                            System.out.println("Pago realizado con éxito.");
+                            pagoExitoso = true; // Cambio de estado
+                            break; // Salir del bucle al hacer el pago exitoso
+                        } else {
+                            System.out.println("Contraseña incorrecta. Vuelve a intentarlo.");
+                        }
+                    }
+                    }
+                }
+                break;
+            default:
+                System.out.println("Selecciona 1 o 2.");
+                break;
+        }
+    }
+
 
 }

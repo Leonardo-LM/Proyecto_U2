@@ -30,10 +30,11 @@ public class Boleto {
         this.precio = precio;
 
     }
-    public Boleto(Pelicula pelicula, List<String> asientosSeleccionados, List<String> articulosExtra ) {
+    public Boleto(Pelicula pelicula, List<String> asientosSeleccionados, List<String> articulosExtra ,double precio) {
         this.asientosSeleccionados = asientosSeleccionados;
         this.articulosExtra = articulosExtra;
         this.pelicula = pelicula;
+        this.precio = precio;
     }
 
     public String getId() {
