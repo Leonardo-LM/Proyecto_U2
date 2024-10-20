@@ -100,67 +100,99 @@ public class Cine {
     //------------Métodos para C.R.U.D----------------
 
     public void registrarPelicula() {
-        boolean continuar = true;
+        boolean continuar;
         do {
-            System.out.println("Registro de una pelicula");
+            System.out.println("Registro de una película");
             String id = this.generarIdPelicula();
-            System.out.print("Ingrese el titulo: ");
+            System.out.print("Ingrese el título: ");
             String titulo = scanner.nextLine();
-            System.out.print("Ingrese la duración(min): ");
-            int duracion = scanner.nextInt();
-            scanner.nextLine();
-            System.out.print("Ingrese el genero: ");
+
+            int duracion;
+            while (true) {
+                System.out.print("Ingrese la duración (min): ");
+                if (scanner.hasNextInt()) {
+                    duracion = scanner.nextInt();
+                    scanner.nextLine();
+                    if (duracion > 0) {
+                        break;
+                    } else {
+                        System.out.println("La duración debe ser un número positivo. Intente de nuevo.");
+                    }
+                } else {
+                    System.out.println("Entrada no válida. Debe ingresar un número entero.");
+                    scanner.nextLine();
+                }
+            }
+
+            System.out.print("Ingrese el género: ");
             String genero = scanner.nextLine();
             System.out.print("Ingrese la clasificación: ");
             String clasificacion = scanner.nextLine();
             System.out.print("Ingrese la sinopsis: ");
             String sinopsis = scanner.nextLine();
 
-            System.out.println("Seleccione el estado de la pelicula:" +
+            System.out.println("Seleccione el estado de la película:" +
                     "\n1. Estado Actual \n" +
-                    "2. Estado Proximamente");
+                    "2. Estado Próximamente");
             System.out.print("Selección: ");
-            int estado = scanner.nextInt();
-            scanner.nextLine();
-            Pelicula pelicula = null;
-            switch (estado) {
-                case 1:
-                    pelicula = new Pelicula(id, titulo, duracion, genero, clasificacion, sinopsis, EstadoPelicula.ACTUAL);
+            int estado;
+            while (true) {
+                estado = scanner.nextInt();
+                scanner.nextLine();
+                if (estado == 1 || estado == 2) {
                     break;
-                case 2:
-                    pelicula = new Pelicula(id, titulo, duracion, genero, clasificacion, sinopsis, EstadoPelicula.PROXIMAMENTE);
-                    break;
+                } else {
+                    System.out.println("Selección no válida. Intente de nuevo (1 o 2).");
+                }
             }
 
-            boolean band = true;
-            LocalTime funcion = null;
+            Pelicula pelicula;
+            if (estado == 1) {
+                pelicula = new Pelicula(id, titulo, duracion, genero, clasificacion, sinopsis, EstadoPelicula.ACTUAL);
+            } else {
+                pelicula = new Pelicula(id, titulo, duracion, genero, clasificacion, sinopsis, EstadoPelicula.PROXIMAMENTE);
+            }
+
+            boolean agregarOtraFuncion;
             do {
                 System.out.println("Ingrese la hora y los minutos de la función: ");
-                System.out.print("Ingrese la hora: ");
-                int hora = scanner.nextInt();
-                System.out.print("Ingrese los minutos: ");
-                int minutos = scanner.nextInt();
-                scanner.nextLine();
+                int hora;
+                do {
+                    System.out.print("Ingrese la hora (0-23): ");
+                    hora = scanner.nextInt();
+                    scanner.nextLine();
+                    if (hora < 0 || hora > 23) {
+                        System.out.println("La hora debe estar entre 0 y 23, intente de nuevo");
+                    }
+                } while (hora < 0 || hora > 23);
 
-                funcion = LocalTime.of(hora, minutos);
+                int minutos;
+                do {
+                    System.out.print("Ingrese los minutos (0-59): ");
+                    minutos = scanner.nextInt();
+                    scanner.nextLine();
+                    if (minutos < 0 || minutos > 59) {
+                        System.out.println("Los minutos deben estar entre 0 y 59, intente de nuevo");
+                    }
+                } while (minutos < 0 || minutos > 59);
+
+                LocalTime funcion = LocalTime.of(hora, minutos);
                 pelicula.agregarFuncion(funcion);
 
-                System.out.print("¿Desea Agregar otra función? S/N");
-                String r = scanner.nextLine().charAt(0) + "";
-                if (!r.toLowerCase().equals("s")) {
-                    band = false;
-                }
-            } while (band);
-            this.agregarPeliculaALista(pelicula);
-            System.out.println("Registro Exitoso");
+                System.out.println("\n¿Desea agregar otra función? S/N");
+                String respuesta = scanner.nextLine().trim().toLowerCase();
+                agregarOtraFuncion = respuesta.equals("s");
+            } while (agregarOtraFuncion);
 
-            System.out.print("Quiere agregar otra pelicula: s/n: ");
-            String r = scanner.nextLine().charAt(0) + "";
-            if (!r.toLowerCase().equals("s")) {
-                continuar = false;
-            }
+            this.agregarPeliculaALista(pelicula);
+            System.out.println("Registro exitoso");
+
+            System.out.print("¿Quiere agregar otra película? s/n: ");
+            String respuesta = scanner.nextLine().trim().toLowerCase();
+            continuar = respuesta.equals("s");
         } while (continuar);
     }
+
 
     public void actualizarDatosPelicula(String idPelicula) {
         Optional<Pelicula> peliculaEncontrada = this.listaPeliculas.stream().filter(
@@ -452,4 +484,56 @@ public class Cine {
         return articulosExtra;
     }
 
+    public void MetodoPago(double x, String id) {
+        System.out.println("Deseas pagar en 1: efectivo o con 2: PAYPAL");
+        int opcion = scanner.nextInt();
+        scanner.nextLine();
+
+        switch (opcion) {
+            case 1:
+                // Pago en efectivo
+                System.out.println("Has elegido pagar en efectivo. El monto a pagar es: $" + x);
+                int y = 2;
+                while (y == 2) {
+                    System.out.println("¿Usuario ya pagó? 1: Sí, 2: No");
+                    y = scanner.nextInt();
+                    if (y == 1) {
+                        System.out.println("Pago realizado con éxito.");
+                    } else if (y == 2) {
+                        System.out.println("Ingrese el pago a caja.");
+                    } else {
+                        System.out.println("Opción inválida. Por favor, elige 1 o 2.");
+                    }
+                }
+                break;
+
+            case 2:
+                // Pago con PayPal
+                boolean pagoExitoso = false;
+                System.out.println("Has elegido pagar con PAYPAL. El monto a pagar es: $" + x);
+
+                for (Cliente cliente : listaClientes) {
+                    if (cliente.getId().equals(id)) {
+                        String correo = cliente.getCorreoE();
+                        while (!pagoExitoso) {
+                            System.out.print("Ingresa la contraseña de tu correo (" + correo + "): ");
+                            String contrasenia = scanner.nextLine();
+                            String usercontra = cliente.getContrasenia();
+
+                            if (contrasenia.equals(usercontra)) {
+                                System.out.println("Pago realizado con éxito.");
+                                pagoExitoso = true;
+                                break;
+                            } else {
+                                System.out.println("Contraseña incorrecta. Vuelve a intentarlo.");
+                            }
+                        }
+                    }
+                }
+                break;
+            default:
+                System.out.println("Selecciona 1 o 2.");
+                break;
+        }
+    }
 }

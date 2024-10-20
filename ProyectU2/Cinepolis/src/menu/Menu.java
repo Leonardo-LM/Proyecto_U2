@@ -184,25 +184,24 @@ public class Menu {
 
                     System.out.println("\n---Compra de un boleto---");
                     int mesActual = LocalDate.now().getMonthValue();//para premium o vip
+
                     cine.mostrarClientesTodos();
                     System.out.println("Ingresa el Id del cliente");
                     scanner.nextLine();
-                    String clienteId = scanner.nextLine();
+                    String clienteId= scanner.nextLine();
                     System.out.println("ID introducido: '" + clienteId + "'");
-                    String nombreCliente = cine.buscarNombreClientePorId(clienteId);
+                    String nombreCliente=cine.buscarNombreClientePorId(clienteId);
                     System.out.println(nombreCliente);
-                    int MesCliente = cine.MesCumpleañosParaVerSiHayDescuento(clienteId);//este al VIP O PREMIUM
-
-
+                    int MesCliente=cine.MesCumpleañosParaVerSiHayDescuento(clienteId);//este al VIP O PREMIUM
                     this.mostrarListaPeliculas();
                     System.out.println("Ingresa el Id de la pelicula que desea el cliente");
-                    String peliculaId = scanner.nextLine();
+                    String peliculaId= scanner.nextLine();
                     System.out.println("ID introducido: '" + peliculaId + "'");
-                    String tituloPelicula = cine.buscarTituloPeliculaPorId(peliculaId);
+                    String tituloPelicula=cine.buscarTituloPeliculaPorId(peliculaId);
 
 
-                    System.out.println("Ingresa el Número de la sala que corresponde");
-                    int NoSala = scanner.nextInt();
+                    System.out.println("Ingresa el Número de la sala que corresponde tenemos sala ");
+                    int NoSala= scanner.nextInt();
 
                     cine.mostrarAsientos();
                     System.out.print("Ingresa el ID del asiento a reservar (ejemplo: A1): ");
@@ -212,33 +211,29 @@ public class Menu {
                     System.out.println(resultado);
 
                     System.out.println("Ingresa tipo de asiento escribe PREMIUM O VIP");
-                    String tipo = scanner.nextLine();
-                    double x = 100;
+                    String tipo= scanner.nextLine();
+                    double x=100;
                     TipoAsiento tipoAsiento;//=TipoAsiento.Normal;
-                    if (tipo.equals("PREMIUM")) {
-                        if (MesCliente == mesActual) {
-                            tipoAsiento = TipoAsiento.PREMIUM;
-                            x = 400 * 0.6;
-                        } else {
-                            x = 400;
+                    if(tipo.equals("PREMIUM")) {
+                        if(MesCliente == mesActual){
+                            tipoAsiento= TipoAsiento.PREMIUM;
+                            x=400*0.6;
+                        }else{
+                            x=400;
                         }
-                    } else if (tipo.equals("VIP")) {
-                        if (MesCliente == mesActual) {
-                            tipoAsiento = TipoAsiento.VIP;
-                            x = 200 * 0.35;
-                        } else {
-                            x = 200;
+                    } else if(tipo.equals("VIP")) {
+                        if(MesCliente == mesActual){
+                            tipoAsiento= TipoAsiento.VIP;
+                            x=200*0.35;
+                        }else{
+                            x=200;
                         }
                     } else {
                         System.out.println("Palabra incorrecta");
                     }
-
-
-                    inventario.mostrarProductos();
-                    List<String> articulosExtra = cine.seleccionarArticulos();
-
-                    String idBoleto = cine.generarIdBoleto();//generamos id del compra.boleto
-                    Boleto boleto = new Boleto(idBoleto, NoSala, LocalDateTime.now(), tituloPelicula, resultado, tipo, nombreCliente, x, articulosExtra);
+                    cine.MetodoPago(x,clienteId);
+                    String idBoleto= cine.generarIdBoleto();//generamos id del compra.boleto
+                    Boleto boleto =new Boleto(idBoleto,NoSala, LocalDateTime.now(),tituloPelicula,resultado,tipo,nombreCliente,x);
                     cine.registrarBoleto(boleto);
                     System.out.println(cine.listaBoletos.get(0));
                     boleto.mostrarInformacion();
@@ -306,13 +301,32 @@ public class Menu {
         System.out.println("Ingrese la contraseña: ");
         String contraseña = scanner.nextLine();
 
+        boolean b;
+        int mesNacimiento;
+        int diaNacimiento;
         System.out.println("Ingresa la fehca de nacimiento del cliente:");
         System.out.println("ingresa el año: ");
         int añoNacimiento = scanner.nextInt();
-        System.out.println("Ingresa el mes: ");
-        int mesNacimiento = scanner.nextInt();
-        System.out.println("Ingresa el día: ");
-        int diaNacimiento = scanner.nextInt();
+        do {
+            System.out.println("Ingresa el mes: ");
+            mesNacimiento = scanner.nextInt();
+            if (mesNacimiento < 1 || mesNacimiento > 12) {
+                System.out.println("El año debe estar entre 1 y 12, intente de nuevo");
+                b = false;
+            }else{
+                b = true;
+            }
+        }while(!b);
+        do {
+            System.out.println("Ingresa el día: ");
+            diaNacimiento = scanner.nextInt();
+            if (diaNacimiento < 1 || diaNacimiento > 30) {
+                System.out.println("El dia debe estar entre 1 y 30, intente de nuevo");
+                b = false;
+            }else{
+                b = true;
+            }
+        }while(!b);
 
         scanner.nextLine();
         System.out.println("Ingrese la curp del cliente: ");
@@ -322,9 +336,8 @@ public class Menu {
         LocalDate fechaNacimiento = LocalDate.of(añoNacimiento, mesNacimiento, diaNacimiento);
 
         Cliente cliente = new Cliente(idCliente, nombre, apellido, telefono, contraseña, fechaNacimiento, curp, correo);
-        //cine.listaClientes.add(cliente);
         cine.registrarCliente(cliente);
-        System.out.println("\n Cliente registrado correctamente ");
+        System.out.println("\n Cliente registrado correctamente \n");
     }
 
     public void registrarEmpleado() {
@@ -409,7 +422,9 @@ public class Menu {
                     break;
                 case 3:
                     System.out.println("Comprar boletos");
-
+                    //cine.registrarPelicula();
+                    //Producto producto =new Producto("refresco",200.00); // ---PUSE ESTO PARA PROBAR METODO
+                    //inventario.registrarProducto(producto);
                     cine.mostrarCartelera();
                     Pelicula peliculaSeleccionada = cine.seleccionarPelicula();
                     cine.mostrarAsientos();
@@ -417,8 +432,48 @@ public class Menu {
                     inventario.mostrarProductos();
                     List<String> articulosExtra = cine.seleccionarArticulos();
 
-                    Boleto boleto = new Boleto(peliculaSeleccionada, asientosSeleccionados, articulosExtra);
-                    boleto.mostrarBoleto();
+                    ///AÑADI PARA PREMIUM VIP METODO PAGO Y SALA
+                    System.out.println("Ingresa tipo de asiento escribe PREMIUM O VIP cualquier otra cosa sera NORMAL");
+                    scanner.nextLine();
+                    String tipo= scanner.nextLine();
+                    double x=100;
+                    int mesActual = LocalDate.now().getMonthValue();
+                    String clienteId = cliente.getId();
+                    String correo=cliente.getCorreoE();
+                    int MesCliente=cine.MesCumpleañosParaVerSiHayDescuento(clienteId);
+                    TipoAsiento tipoAsiento;//=TipoAsiento.Normal;
+                    if(tipo.equalsIgnoreCase("PREMIUM")) {
+                        if(MesCliente == mesActual){
+                            tipoAsiento= TipoAsiento.PREMIUM;
+                            x=400*0.6;
+                        }else{
+                            x=400;
+                        }
+                    } else if(tipo.equalsIgnoreCase("VIP")) {
+                        if(MesCliente == mesActual){
+                            tipoAsiento= TipoAsiento.VIP;
+                            x=200*0.35;
+                        }else{
+                            x=200;
+                        }
+
+                    }
+                    boolean continuar = true;
+                    while (continuar) {
+                        System.out.println("Se comprara desde Pay Pal con el correo:"+correo);
+                        System.out.println("El precio de:"+x);
+                        System.out.println("Escriba 1 para continuar 2 para cancelar");
+                        int price= scanner.nextInt();
+                        if(price==1){
+                            Boleto boleto = new Boleto(peliculaSeleccionada, asientosSeleccionados, articulosExtra,x);
+                            boleto.mostrarBoleto();
+                            continuar=false;
+                        }else {
+                            System.out.println("Se cancelo la compra");
+                            continuar=false;
+                        }
+                    }
+
                     break;
                 case 4:
                     cine.mostrarAsientos();
