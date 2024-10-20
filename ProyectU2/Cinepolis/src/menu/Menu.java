@@ -392,9 +392,9 @@ public class Menu {
                     break;
                 case 3:
                     System.out.println("Comprar boletos");
-                    cine.registrarPelicula();
-                    Producto producto =new Producto("refresco",200.00); // ---PUSE ESTO PARA PROBAR METODO
-                    inventario.registrarProducto(producto);
+                    //cine.registrarPelicula();
+                    //Producto producto =new Producto("refresco",200.00); // ---PUSE ESTO PARA PROBAR METODO
+                    //inventario.registrarProducto(producto);
                     cine.mostrarCartelera();
                     Pelicula peliculaSeleccionada = cine.seleccionarPelicula();
                     cine.mostrarAsientos();

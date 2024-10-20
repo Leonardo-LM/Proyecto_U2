@@ -12,13 +12,13 @@ public class Main {
         //menu.login();
         Cine cine = new Cine();
         Cliente cliente = new Cliente("1","1", "1", "1", "1", date, "2", "q");
-        cine.registrarCliente(cliente);
-        cine.mostrarClientesTodos();
-        menu.mostrarMenuCliente(cliente);
+        //cine.registrarCliente(cliente);
+        //cine.mostrarClientesTodos();
+        //menu.mostrarMenuCliente(cliente);
 
         //cine.mostrarAsientos();
         //cine.registrarPelicula();
         //cine.mostrarCartelera();
-        //menu.mostrarMenuAdmin(cine.administradorPredeterminado);
+        menu.mostrarMenuAdmin(cine.administradorPredeterminado);
     }
 }

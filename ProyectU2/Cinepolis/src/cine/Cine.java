@@ -342,7 +342,7 @@ public class Cine {
         asientos = new ArrayList<>();
         for (int i = 0; i < FILAS; i++) {
             for (int j = 0; j < COLUMNAS; j++) {
-                asientos.add((char) ('A' + i) + "" + (j + 1)); // Inicializa con A1, A2, ..., F6
+                asientos.add((char) ('A' + i) + "" + (j + 1));
             }
         }
     }
@@ -350,7 +350,7 @@ public class Cine {
         return asientos.indexOf(idAsiento);
     }
     public boolean estaReservado(int indice) {
-        return indice >= 0 && asientos.get(indice).equals("X"); // Verifica si el asiento está reservado
+        return indice >= 0 && asientos.get(indice).equals("X"); // Verifica la reserva
     }
 
     public String reservarAsiento(String idAsiento) {
@@ -451,7 +451,7 @@ public class Cine {
     public void MetodoPago(double x, String id) {
         System.out.println("Deseas pagar en 1: efectivo o con 2: PAYPAL");
         int opcion = scanner.nextInt();
-        scanner.nextLine(); // Capturar el salto de línea después de nextInt()
+        scanner.nextLine();
 
         switch (opcion) {
             case 1:
@@ -481,13 +481,13 @@ public class Cine {
                         String correo = cliente.getCorreoE();
                         while (!pagoExitoso) {
                         System.out.print("Ingresa la contraseña de tu correo (" + correo + "): ");
-                        String contrasenia = scanner.nextLine(); // Cambié a nextLine para capturar la contraseña correctamente
+                        String contrasenia = scanner.nextLine();
                         String usercontra = cliente.getContrasenia();
 
                         if (contrasenia.equals(usercontra)) {
                             System.out.println("Pago realizado con éxito.");
-                            pagoExitoso = true; // Cambio de estado
-                            break; // Salir del bucle al hacer el pago exitoso
+                            pagoExitoso = true;
+                            break;
                         } else {
                             System.out.println("Contraseña incorrecta. Vuelve a intentarlo.");
                         }
