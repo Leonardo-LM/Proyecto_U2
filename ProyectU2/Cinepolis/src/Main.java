@@ -9,13 +9,12 @@ public class Main {
         Menu menu = new Menu();
         LocalDate date = LocalDate.now();
 
-        menu.login();
-        // Cine cine = new Cine();
-        // Cliente cliente = new Cliente("1","1", "1", "1", "1", date, "1", "q");
-        //  menu.mostrarMenuCliente(cliente);
-        //cine.mostrarAsientos();
-        //cine.registrarPelicula();
-        //cine.mostrarCartelera();
-        //menu.mostrarMenuAdmin(cine.administradorPredeterminado);
+<<<<<<< HEAD
+       
+=======
+        //menu.login();
+        Cliente cliente = new Cliente("1","1", "1", "1", "1", date, "1", "q");
+        menu.mostrarMenuCliente(cliente);
+>>>>>>> e8dee13 (Guaradando cambios locales antes del pull)
     }
 }
