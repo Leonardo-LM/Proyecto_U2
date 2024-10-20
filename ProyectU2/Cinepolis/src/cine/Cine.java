@@ -30,7 +30,6 @@ public class Cine {
     private Random random = new Random();
     public Scanner scanner = new Scanner(System.in);
     public Administrador administradorPredeterminado;
-    public ArrayList<Asiento> listaAsientos = new ArrayList<>();
     public ArrayList<Boleto> listaBoletos = new ArrayList<>();
 
     //mod para q funcionara
@@ -41,12 +40,9 @@ public class Cine {
 
     }
 
-    //public Cine() {
-    //}
-
     //------------- Métodos de Agregación -----------------
 
-    public void registrarPelicula(Pelicula pelicula) {
+    public void agregarPeliculaALista(Pelicula pelicula) {
         this.listaPeliculas.add(pelicula);
     }
 
@@ -151,11 +147,10 @@ public class Cine {
                     band = false;
                 }
             } while (band);
-            registrarPelicula1(pelicula);
-            //this.registrarPelicula(pelicula);
+            this.agregarPeliculaALista(pelicula);
             System.out.println("Registro Exitoso");
 
-            System.out.print("Quiere agregar otra pelicula: s/n");
+            System.out.print("Quiere agregar otra pelicula: s/n: ");
             String r = scanner.nextLine().charAt(0) + "";
             if (!r.toLowerCase().equals("s")) {
                 continuar = false;
@@ -247,7 +242,6 @@ public class Cine {
             }
         }
     }
-
 
     //----------- Validaciones -----------
 
@@ -399,10 +393,6 @@ public class Cine {
         for (Pelicula pelicula : this.listaPeliculas) {
             System.out.println(pelicula.mostrarInformacionpelicula());
         }
-    }
-
-    public void registrarPelicula1(Pelicula pelicula) {
-        this.listaPeliculas.add(pelicula);
     }
 
     public int MesCumpleañosParaVerSiHayDescuento(String id) {

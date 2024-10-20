@@ -24,7 +24,7 @@ import java.util.Scanner;
 public class Menu {
     private final Scanner scanner = new Scanner(System.in);
     private final Cine cine = new Cine();
-    private final Inventario inventario = new Inventario();
+    public final Inventario inventario = new Inventario();
     public Sala sala;
 
     public void login() {
@@ -79,7 +79,7 @@ public class Menu {
         //movi de private a public para probar
         int respuesta = 0;
 
-        while (respuesta != 14) {
+        while (respuesta != 16) {
             cine.inicializar(); //necesario para no 10
             System.out.println("Buen dia " + admin.nombre + " " + admin.apellido);
             System.out.println("""
@@ -97,7 +97,8 @@ public class Menu {
                     12.-Mostrar Clientes
                     13.-Mostrar Peliculas
                     14.-Compra de productos
-                    15.-Salir""");
+                    15.-Mostrar Empleados
+                    16.-Salir""");
             System.out.print("Elija una opción: ");
             respuesta = scanner.nextInt();
 
@@ -124,7 +125,6 @@ public class Menu {
                     cine.actualizarDatosPelicula(idPeliculaA);
                     break;
                 case 5:
-                    System.out.println("---Dulceria---");
                     inventario.mostrarProductos();
                     break;
                 case 6:
@@ -133,23 +133,23 @@ public class Menu {
 
                     break;
                 case 7:
-                    Inventario inventario = new Inventario();
+
                     respuesta = 0;
                     boolean continuar;
 
                     while (respuesta != 2) {
                         System.out.println("---Registrar un producto---");
 
-
+                        scanner.nextLine();
                         System.out.println("Nombre del producto:");
                         String nombreProducto = scanner.nextLine();
 
-                        scanner.nextLine();
                         System.out.println("Precio del producto:");
                         Double precioProducto = scanner.nextDouble();
 
                         Producto producto = new Producto(nombreProducto, precioProducto);
                         inventario.registrarProducto(producto);
+                        scanner.nextLine();
                         do {
                             try {
                                 continuar = false;
@@ -168,14 +168,13 @@ public class Menu {
                     }
                     break;
                 case 8:
-                    inventario = new Inventario();
                     System.out.println("\n---Eliminar un producto---");
 
                     scanner.nextLine();
                     System.out.println("Ingresa el nombre del producto:");
                     String nombreProducto = scanner.nextLine();
 
-                    inventario.eliminarProducto(nombreProducto);
+                    this.inventario.eliminarProducto(nombreProducto);
 
                     break;
                 case 9:
@@ -234,7 +233,7 @@ public class Menu {
                         System.out.println("Palabra incorrecta");
                     }
 
-                    inventario = new Inventario();
+
                     inventario.mostrarProductos();
                     List<String> articulosExtra = cine.seleccionarArticulos();
 
@@ -257,8 +256,13 @@ public class Menu {
                     cine.mostrarPeliculasTodas();
                     break;
                 case 14:
-                    System.out.println("\n-----Adiosito-----\n");
                     return;
+                case 15:
+                    this.mostrarListaEmpleados();
+                    break;
+                case 16:
+                    System.out.println("\n-----Hasta luego, vuelva pronto-----\n");
+                    break;
             }
         }
         scanner.close();
@@ -269,6 +273,13 @@ public class Menu {
     public void mostrarListaPeliculas() {
         for (Pelicula pelicula : cine.listaPeliculas) {
             System.out.println("Titulo: " + pelicula.titulo + "Id: " + pelicula.id);
+        }
+    }
+
+    public void mostrarListaEmpleados(){
+        System.out.println("Empleados registrados en el sistema:");
+        for (Empleado empleado : cine.listaEmpleados){
+            System.out.println("Nombre: " + empleado.nombre + "Id: " + empleado.id);
         }
     }
 

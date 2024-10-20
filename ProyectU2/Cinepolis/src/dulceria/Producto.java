@@ -17,7 +17,6 @@ public class Producto {
     public String getNombre() {
         return nombre;
     }
-
     public Double getPrecio() {
         return precio;
     }
