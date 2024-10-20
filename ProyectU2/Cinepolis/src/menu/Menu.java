@@ -17,6 +17,7 @@ import usuarios.empleados.Empleado;
 import utils.Rol;
 import utils.TipoAsiento;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
 
@@ -392,6 +393,16 @@ public class Menu {
                     break;
                 case 3:
                     System.out.println("Comprar boletos");
+
+                    cine.mostrarCartelera();
+                    Pelicula peliculaSeleccionada = cine.seleccionarPelicula();
+                    cine.mostrarAsientos();
+                    List<String> asientosSeleccionados = cine.seleccionarAsientos();
+                    inventario.mostrarProductos();
+                    List<String> articulosExtra = cine.seleccionarArticulos();
+
+                    Boleto boleto = new Boleto(peliculaSeleccionada, asientosSeleccionados, articulosExtra);
+                    boleto.mostrarBoleto();
                     break;
                 case 4:
                     cine.mostrarAsientos();

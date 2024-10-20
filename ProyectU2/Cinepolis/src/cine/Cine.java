@@ -405,4 +405,45 @@ public class Cine {
         }
         return 0;
     }
+
+    public Pelicula seleccionarPelicula() {
+        System.out.println("Selecciona el número de la película que deseas ver:");
+        int opcion = scanner.nextInt();
+
+        return listaPeliculas.get(opcion - 1);
+    }
+    public List<String> seleccionarAsientos() {
+        Scanner scanner = new Scanner(System.in);
+        List<String> asientosSeleccionados = new ArrayList<>();
+        String asiento;
+
+        System.out.println("Ingresa los asientos que deseas (ej. A1, B3) y escribe 'fin' para terminar:");
+
+        while (true) {
+            asiento = scanner.nextLine();
+            if (asiento.equalsIgnoreCase("fin")) {
+                break;
+            }
+            asientosSeleccionados.add(asiento);
+        }
+
+        return asientosSeleccionados;
+    }
+
+    public List<String> seleccionarArticulos() {
+        Scanner scanner = new Scanner(System.in);
+        List<String> articulosExtra = new ArrayList<>();
+        String articulo;
+
+        System.out.println("Selecciona los artículos extra (palomitas, refresco, etc.) y escribe 'fin' para terminar:");
+        while (true) {
+            articulo = scanner.nextLine();
+            if (articulo.equalsIgnoreCase("fin")) {
+                break;
+            }
+            articulosExtra.add(articulo);
+        }
+        return articulosExtra;
+    }
+
 }

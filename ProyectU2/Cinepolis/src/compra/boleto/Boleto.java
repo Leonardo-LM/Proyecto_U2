@@ -1,5 +1,9 @@
 package compra.boleto;
+import cartelera.Pelicula;
+
 import java.time.LocalDateTime;
+import java.util.List;
+
 public class Boleto {
     public String id;
     public int noSala;
@@ -9,6 +13,10 @@ public class Boleto {
     public String tipoAsiento; //VIP, PREMIUM 0 o normal
     public String cliente;
     public double precio;
+
+    private List<String> asientosSeleccionados;
+    private List<String> articulosExtra;
+    private Pelicula pelicula;
     //public boolean tipoDescuento; quite de constructor para pruebas
 
     public Boleto(String id, int noSala, LocalDateTime fechaHora, String nombrePelicula, String asiento, String tipoAsiento, String cliente, double precio) {
@@ -21,6 +29,11 @@ public class Boleto {
         this.cliente = cliente;
         this.precio = precio;
 
+    }
+    public Boleto(Pelicula pelicula, List<String> asientosSeleccionados, List<String> articulosExtra ) {
+        this.asientosSeleccionados = asientosSeleccionados;
+        this.articulosExtra = articulosExtra;
+        this.pelicula = pelicula;
     }
 
     public String getId() {
@@ -97,5 +110,13 @@ public class Boleto {
                 ",cliente: " + cliente +
                 ", precio: " + precio;
     }
-
+    public void mostrarBoleto() {
+        System.out.println("========== BOLETO DE CINE ==========");
+        System.out.println("Película: " + pelicula.getTitulo());
+        System.out.println("Clasificación: " + pelicula.getClasificacion());
+        System.out.println("Duración: " + pelicula.getDuracion() + " min");
+        System.out.println("Asientos seleccionados: " + String.join(", ", asientosSeleccionados));
+        System.out.println("Artículos extras: " + (articulosExtra.isEmpty() ? "Ninguno" : String.join(", ", articulosExtra)));
+        System.out.println("=====================================");
+    }
 }
