@@ -79,7 +79,7 @@ public class Menu {
         //movi de private a public para probar
         int respuesta = 0;
 
-        while (respuesta != 16) {
+        while (respuesta != 15) {
             cine.inicializar(); //necesario para no 10
             System.out.println("Buen dia " + admin.nombre + " " + admin.apellido);
             System.out.println("""
@@ -96,9 +96,8 @@ public class Menu {
                     11.-Mostrar Boletos
                     12.-Mostrar Clientes
                     13.-Mostrar Peliculas
-                    14.-Compra de productos
-                    15.-Mostrar Empleados
-                    16.-Salir""");
+                    14.-Mostrar Empleados
+                    15.-Salir""");
             System.out.print("Elija una opción: ");
             respuesta = scanner.nextInt();
 
@@ -120,6 +119,7 @@ public class Menu {
                 case 4:
                     System.out.println("---Actualizar una pelicula---");
                     this.mostrarListaPeliculas();
+                    scanner.nextLine();
                     System.out.println("Ingrese el id de la pelicula que desea actualizar: ");
                     String idPeliculaA = scanner.nextLine();
                     cine.actualizarDatosPelicula(idPeliculaA);
@@ -251,11 +251,9 @@ public class Menu {
                     cine.mostrarPeliculasTodas();
                     break;
                 case 14:
-                    return;
-                case 15:
                     this.mostrarListaEmpleados();
                     break;
-                case 16:
+                case 15:
                     System.out.println("\n-----Hasta luego, vuelva pronto-----\n");
                     break;
             }
