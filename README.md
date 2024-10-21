@@ -1,7 +1,10 @@
 #Integrantes del equipo:
 1.Sánchez Hernández Estrella Abigail
+
 2.López Meza Leonardo
+
 3.Contreras Guerrero Diego Axel
+
 4.Guzman Domínguez Nicolás
 
 #Este proyecto moderniza y optimiza el sistema de gestión de Cinépolis para mejorar la compra de boletos, la reserva de asientos y 
