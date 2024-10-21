@@ -1,4 +1,5 @@
 #Integrantes del equipo:
+
 1.Sánchez Hernández Estrella Abigail
 
 2.López Meza Leonardo
